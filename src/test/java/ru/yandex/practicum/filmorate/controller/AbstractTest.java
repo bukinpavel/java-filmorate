@@ -14,9 +14,11 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import ru.yandex.practicum.filmorate.FilmorateApplication;
+import ru.yandex.practicum.filmorate.model.Film;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@SpringBootTest//(classes = DemoApplication.class)
+@SpringBootTest//(classes = Application.class)
 @WebAppConfiguration
 public abstract class AbstractTest {
     protected MockMvc mvc;
