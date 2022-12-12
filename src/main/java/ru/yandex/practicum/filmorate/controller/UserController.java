@@ -37,10 +37,12 @@ public class UserController {
         if(user.getLogin()==null || user.getLogin().isBlank() || user.getLogin().contains(" ")){
             throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
         }
+        /*
         if(users.containsKey(user.getEmail())) {
             throw new ValidationException("Пользователь с электронной почтой " +
                     user.getEmail() + " уже зарегистрирован.");
         }
+         */
         if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
@@ -55,9 +57,21 @@ public class UserController {
         if(user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
-        if(!users.containsKey(user.getEmail())){
-            throw new ValidationException("Обновляется пользователь, ID которого не существует");
+        if(!user.getEmail().contains("@")){
+            throw new ValidationException("Адрес электронной почты должен содержать @.");
         }
+        if(user.getLogin()==null || user.getLogin().isBlank() || user.getLogin().contains(" ")){
+            throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
+        }
+        if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
+            throw new ValidationException("Дата рождения не может быть в будущем");
+        }
+        /*
+        if(!users.containsKey(user.getEmail())){
+            throw new ValidationException("Пользователь с электронной почтой " +
+                    user.getEmail() + " уже зарегистрирован.");
+        }
+         */
         users.put(user.getEmail(), user);
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
