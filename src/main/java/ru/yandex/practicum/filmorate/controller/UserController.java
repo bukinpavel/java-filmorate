@@ -71,12 +71,7 @@ public class UserController {
         if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
-        /*
-        if(!users.containsKey(user.getEmail())){
-            throw new ValidationException("Пользователь с электронной почтой " +
-                    user.getEmail() + " уже зарегистрирован.");
-        }
-         */
+
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
