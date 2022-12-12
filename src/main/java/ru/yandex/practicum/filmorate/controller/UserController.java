@@ -47,7 +47,6 @@ public class UserController {
         if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
-        users.put(user.getEmail(), user);
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
@@ -55,6 +54,7 @@ public class UserController {
             user.setId(id);
             id++;
         }
+        users.put(user.getEmail(), user);
         return user;
     }
     @PutMapping
@@ -77,7 +77,6 @@ public class UserController {
                     user.getEmail() + " уже зарегистрирован.");
         }
          */
-        users.put(user.getEmail(), user);
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
@@ -85,6 +84,7 @@ public class UserController {
             user.setId(id);
             id++;
         }
+        users.put(user.getEmail(), user);
         return user;
     }
 }

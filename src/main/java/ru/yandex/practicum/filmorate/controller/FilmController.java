@@ -18,6 +18,7 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private final Map<String, Film> films = new HashMap<>();
+    Integer id = 1;
 
     @GetMapping
     public List<Film> findAll() {
