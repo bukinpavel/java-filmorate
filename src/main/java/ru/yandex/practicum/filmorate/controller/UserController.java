@@ -17,6 +17,7 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<String, User> users = new HashMap<>();
+    Integer id = 0;
 
     @GetMapping
     public List<User> findAll() {
@@ -50,6 +51,10 @@ public class UserController {
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
+        if(user.getId()==null){
+            user.setId(id);
+            id++;
+        }
         return user;
     }
     @PutMapping
@@ -75,6 +80,10 @@ public class UserController {
         users.put(user.getEmail(), user);
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
+        }
+        if(user.getId()==null){
+            user.setId(id);
+            id++;
         }
         return user;
     }

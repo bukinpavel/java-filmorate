@@ -15,14 +15,14 @@ class UserControllerTest {
 
     @Test
     void testCreate() throws Exception {
-        User userWithoutEmail = new User(0, null, "login",  LocalDate.of(1985, 2, 5));
+        User userWithoutEmail = new User(null, "login",  LocalDate.of(1985, 2, 5));
         ValidationException ex = Assertions.assertThrows(
                 ValidationException.class,
                 generateExecutable(userWithoutEmail)
         );
         Assertions.assertEquals("Адрес электронной почты не может быть пустым.", ex.getMessage());
 
-        User userWithoutLogin = new User(0, null, "",  LocalDate.of(1985, 2, 5));
+        User userWithoutLogin = new User( null, "",  LocalDate.of(1985, 2, 5));
         ValidationException exLog = Assertions.assertThrows(
                 ValidationException.class,
                 generateExecutable(userWithoutLogin)
@@ -33,7 +33,7 @@ class UserControllerTest {
 
     @Test
     void put() throws Exception {
-        User userWithoutEmail = new User(0, null, "login",  LocalDate.of(1985, 2, 5));
+        User userWithoutEmail = new User(null, "login",  LocalDate.of(1985, 2, 5));
         ValidationException ex = Assertions.assertThrows(
                 ValidationException.class,
                 putExecutable(userWithoutEmail)
