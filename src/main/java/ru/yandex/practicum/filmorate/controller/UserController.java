@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final Map<String, User> users = new HashMap<>();
+    private final Map<Integer, User> users = new HashMap<>();
     Integer id = 1;
 
     @GetMapping
@@ -54,7 +54,7 @@ public class UserController {
             user.setId(id);
             id++;
         }
-        users.put(user.getEmail(), user);
+        users.put(user.getId(), user);
         return user;
     }
     @PutMapping
@@ -75,11 +75,10 @@ public class UserController {
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
-        if(user.getId()==null){
-            user.setId(id);
-            id++;
+        if(users.containsKey(user.getId())){
+            throw new ValidationException("Объекта с таким ID нет.");
         }
-        users.put(user.getEmail(), user);
+        users.put(user.getId(), user);
         return user;
     }
 }
