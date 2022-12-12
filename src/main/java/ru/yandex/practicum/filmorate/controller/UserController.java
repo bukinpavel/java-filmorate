@@ -51,11 +51,11 @@ public class UserController {
     }
     @PutMapping
     public User put(@RequestBody User user) {
-        if(!users.containsKey(user.getId())){
-            throw new ValidationException("Обновляется пользователь,  ID которого не существует");
-        }
         if(user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
+        }
+        if(!users.containsKey(user.getId())){
+            throw new ValidationException("Обновляется пользователь,  ID которого не существует");
         }
         users.put(user.getId(), user);
         return user;
