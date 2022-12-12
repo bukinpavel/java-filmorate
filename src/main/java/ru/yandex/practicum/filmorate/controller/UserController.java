@@ -38,12 +38,7 @@ public class UserController {
         if(user.getLogin()==null || user.getLogin().isBlank() || user.getLogin().contains(" ")){
             throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
         }
-        /*
-        if(users.containsKey(user.getEmail())) {
-            throw new ValidationException("Пользователь с электронной почтой " +
-                    user.getEmail() + " уже зарегистрирован.");
-        }
-         */
+
         if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
@@ -75,7 +70,7 @@ public class UserController {
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
-        if(users.containsKey(user.getId())){
+        if(!users.containsKey(user.getId())){
             throw new ValidationException("Объекта с таким ID нет.");
         }
         users.put(user.getId(), user);
