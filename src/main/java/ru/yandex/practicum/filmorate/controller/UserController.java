@@ -30,9 +30,7 @@ public class UserController {
         if(user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
-        if(user.getId() == null) {
-            throw new ValidationException("ID не может быть пустым.");
-        }
+
         if(!user.getEmail().contains("@")){
             throw new ValidationException("Адрес электронной почты должен содержать @.");
         }
@@ -47,6 +45,9 @@ public class UserController {
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
         users.put(user.getEmail(), user);
+        if(user.getName()==null || user.getName().isBlank()){
+            user.setName(user.getLogin());
+        }
         return user;
     }
     @PutMapping
@@ -54,11 +55,10 @@ public class UserController {
         if(user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
-        if(!users.containsKey(user.getId())){
+        if(!users.containsKey(user.getEmail())){
             throw new ValidationException("Обновляется пользователь, ID которого не существует");
         }
         users.put(user.getEmail(), user);
-
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
         }
