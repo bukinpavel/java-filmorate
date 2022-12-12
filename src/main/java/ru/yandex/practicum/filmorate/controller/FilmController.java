@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final Map<String, Film> films = new HashMap<>();
+    private final Map<Integer, Film> films = new HashMap<>();
     Integer id = 1;
 
     @GetMapping
@@ -45,7 +45,7 @@ public class FilmController {
             film.setId(id);
             id++;
         }
-        films.put(film.getName(), film);
+        films.put(film.getId(), film);
         return film;
     }
 
@@ -58,7 +58,10 @@ public class FilmController {
             film.setId(id);
             id++;
         }
-        films.put(film.getName(), film);
+        if(!films.containsKey(film.getId())){
+            throw new ValidationException("Объекта с таким ID нет.");
+        }
+        films.put(film.getId(), film);
         return film;
     }
 }
