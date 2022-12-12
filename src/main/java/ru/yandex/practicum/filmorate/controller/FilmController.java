@@ -38,7 +38,7 @@ public class FilmController {
             throw new ValidationException("Продолжительность фильма должна быть положительной.");
         }
         if(film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
-            throw new ValidationException("Дата рождения не может быть в будущем");
+            throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года.");
         }
         films.put(film.getId(), film);
         return film;
