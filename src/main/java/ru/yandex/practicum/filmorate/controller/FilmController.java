@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/films")
 public class FilmController {
-    private final Map<Integer, Film> films = new HashMap<>();
+    private final Map<String, Film> films = new HashMap<>();
 
     @GetMapping
     public List<Film> findAll() {
@@ -40,7 +40,7 @@ public class FilmController {
         if(film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
             throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года.");
         }
-        films.put(film.getId(), film);
+        films.put(film.getName(), film);
         return film;
     }
 
@@ -49,7 +49,7 @@ public class FilmController {
         if(film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым.");
         }
-        films.put(film.getId(), film);
+        films.put(film.getName(), film);
         return film;
     }
 }

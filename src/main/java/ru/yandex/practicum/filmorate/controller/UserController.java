@@ -16,7 +16,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final Map<Integer, User> users = new HashMap<>();
+    private final Map<String, User> users = new HashMap<>();
 
     @GetMapping
     public List<User> findAll() {
@@ -46,7 +46,7 @@ public class UserController {
         if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
-        users.put(user.getId(), user);
+        users.put(user.getEmail(), user);
         return user;
     }
     @PutMapping
@@ -57,7 +57,7 @@ public class UserController {
         if(!users.containsKey(user.getId())){
             throw new ValidationException("Обновляется пользователь, ID которого не существует");
         }
-        users.put(user.getId(), user);
+        users.put(user.getEmail(), user);
 
         if(user.getName()==null || user.getName().isBlank()){
             user.setName(user.getLogin());
