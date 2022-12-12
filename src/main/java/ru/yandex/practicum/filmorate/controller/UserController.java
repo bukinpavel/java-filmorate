@@ -55,9 +55,13 @@ public class UserController {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
         if(!users.containsKey(user.getId())){
-            throw new ValidationException("Обновляется пользователь,  ID которого не существует");
+            throw new ValidationException("Обновляется пользователь, ID которого не существует");
         }
         users.put(user.getId(), user);
+
+        if(user.getName()==null || user.getName().isBlank()){
+            user.setName(user.getLogin());
+        }
         return user;
     }
 }

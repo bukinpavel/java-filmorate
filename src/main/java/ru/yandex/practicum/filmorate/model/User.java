@@ -1,6 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
+import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,6 +11,8 @@ public class User {
     private final Integer id;
     private final String email;
     private final String login;
-    private final String name;
+    private String name;
     private final LocalDate birthday;
+
+
 }
