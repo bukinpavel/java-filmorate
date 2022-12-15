@@ -55,7 +55,7 @@ public class UserController {
             id++;
         }
         users.put(user.getId(), user);
-        return new ResponseEntity(user, HttpStatus.CREATED);
+        return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PutMapping
@@ -80,6 +80,6 @@ public class UserController {
             throw new ValidationException("Объекта с таким ID нет.");
         }
         users.put(user.getId(), user);
-        return new ResponseEntity<>(user, HttpStatus.CREATED);
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 }

@@ -50,7 +50,7 @@ public class FilmController {
             id++;
         }
         films.put(film.getId(), film);
-        return new ResponseEntity<>(film, HttpStatus.CREATED);
+        return new ResponseEntity<>(film, HttpStatus.OK);
     }
 
     @PutMapping
@@ -67,6 +67,6 @@ public class FilmController {
             throw new ValidationException("Объекта с таким ID нет.");
         }
         films.put(film.getId(), film);
-        return new ResponseEntity<>(film, HttpStatus.CREATED);
+        return new ResponseEntity<>(film, HttpStatus.OK);
     }
 }
