@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@RequestBody User user) {
+    public User create(@Valid @RequestBody User user) {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
