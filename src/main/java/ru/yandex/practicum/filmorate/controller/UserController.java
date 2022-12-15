@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/users")
 public class UserController {
     private final Map<Integer, User> users = new HashMap<>();
-    Integer id = 1;
+    private Integer id = 1;
 
     @GetMapping
     public List<User> findAll() {
@@ -29,49 +29,50 @@ public class UserController {
 
     @PostMapping
     public User create(@RequestBody User user) {
-        if(user.getEmail() == null || user.getEmail().isBlank()) {
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
 
-        if(!user.getEmail().contains("@")){
+        if (!user.getEmail().contains("@")) {
             throw new ValidationException("Адрес электронной почты должен содержать @.");
         }
-        if(user.getLogin()==null || user.getLogin().isBlank() || user.getLogin().contains(" ")){
+        if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
             throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
         }
 
-        if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
+        if (!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))) {
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
-        if(user.getName()==null || user.getName().isBlank()){
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        if(user.getId()==null){
+        if (user.getId() == null) {
             user.setId(id);
             id++;
         }
         users.put(user.getId(), user);
         return user;
     }
+
     @PutMapping
     public User put(@Valid @RequestBody User user) {
-        if(user.getEmail() == null || user.getEmail().isBlank()) {
+        if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
-        if(!user.getEmail().contains("@")){
+        if (!user.getEmail().contains("@")) {
             throw new ValidationException("Адрес электронной почты должен содержать @.");
         }
-        if(user.getLogin()==null || user.getLogin().isBlank() || user.getLogin().contains(" ")){
+        if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
             throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
         }
-        if(!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))){
+        if (!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))) {
             throw new ValidationException("Дата рождения не может быть в будущем");
         }
 
-        if(user.getName()==null || user.getName().isBlank()){
+        if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        if(!users.containsKey(user.getId())){
+        if (!users.containsKey(user.getId())) {
             throw new ValidationException("Объекта с таким ID нет.");
         }
         users.put(user.getId(), user);

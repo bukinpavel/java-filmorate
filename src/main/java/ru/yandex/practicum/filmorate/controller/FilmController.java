@@ -18,7 +18,7 @@ import java.util.Map;
 @RequestMapping("/films")
 public class FilmController {
     private final Map<Integer, Film> films = new HashMap<>();
-    Integer id = 1;
+    private Integer id = 1;
 
     @GetMapping
     public List<Film> findAll() {
@@ -29,19 +29,19 @@ public class FilmController {
 
     @PostMapping
     public Film create(@RequestBody Film film) {
-        if(film.getName() == null || film.getName().isBlank()) {
+        if (film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым.");
         }
-        if(film.getDescription().length() > 200){
+        if (film.getDescription().length() > 200) {
             throw new ValidationException("Максимальная длина описания - 200 символов");
         }
-        if(film.getDuration()<0){
+        if (film.getDuration() < 0) {
             throw new ValidationException("Продолжительность фильма должна быть положительной.");
         }
-        if(film.getReleaseDate().isBefore(LocalDate.of(1895,12,28))){
+        if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года.");
         }
-        if(film.getId()==null){
+        if (film.getId() == null) {
             film.setId(id);
             id++;
         }
@@ -51,14 +51,14 @@ public class FilmController {
 
     @PutMapping
     public Film put(@RequestBody Film film) {
-        if(film.getName() == null || film.getName().isBlank()) {
+        if (film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым.");
         }
-        if(film.getId()==null){
+        if (film.getId() == null) {
             film.setId(id);
             id++;
         }
-        if(!films.containsKey(film.getId())){
+        if (!films.containsKey(film.getId())) {
             throw new ValidationException("Объекта с таким ID нет.");
         }
         films.put(film.getId(), film);
