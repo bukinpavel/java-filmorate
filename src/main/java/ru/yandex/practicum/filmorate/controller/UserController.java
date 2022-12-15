@@ -2,6 +2,8 @@ package ru.yandex.practicum.filmorate.controller;
 
 import exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 
@@ -28,7 +30,8 @@ public class UserController {
     }
 
     @PostMapping
-    public User create(@Valid @RequestBody User user) {
+    public ResponseEntity<User> create(@Valid @RequestBody User user) {
+
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
@@ -46,16 +49,17 @@ public class UserController {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
+
         if (user.getId() == null) {
             user.setId(id);
             id++;
         }
         users.put(user.getId(), user);
-        return user;
+        return new ResponseEntity(user, HttpStatus.ACCEPTED);
     }
 
     @PutMapping
-    public User put(@Valid @RequestBody User user) {
+    public ResponseEntity<User> put(@Valid @RequestBody User user) {
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
@@ -76,6 +80,6 @@ public class UserController {
             throw new ValidationException("Объекта с таким ID нет.");
         }
         users.put(user.getId(), user);
-        return user;
+        return new ResponseEntity<>(user, HttpStatus.ACCEPTED);
     }
 }

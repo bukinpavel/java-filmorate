@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NonNull;
 import lombok.Setter;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 
 import javax.validation.ValidationException;
