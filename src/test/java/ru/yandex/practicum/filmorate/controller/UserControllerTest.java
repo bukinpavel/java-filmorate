@@ -30,7 +30,6 @@ class UserControllerTest {
         Assertions.assertEquals("Адрес электронной почты не может быть пустым.", exLog.getMessage());
     }
 
-
     @Test
     void put() throws Exception {
         User userWithoutEmail = new User(null, "login",  LocalDate.of(1985, 2, 5));

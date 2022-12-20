@@ -20,21 +20,21 @@ class FilmControllerTest {
 
     @Test
     void create() {
-        Film filmWithoutName = new Film(0, null, "RomanticFilm", LocalDate.of(1985, 2, 5), 70);
+        Film filmWithoutName = new Film(null, "RomanticFilm", LocalDate.of(1985, 2, 5), 70);
         ValidationException ex = Assertions.assertThrows(
                 ValidationException.class,
                 generateExecutable(filmWithoutName)
         );
         Assertions.assertEquals("Название фильма не может быть пустым.", ex.getMessage());
 
-        Film filmWithOutdateRelease = new Film(1, "Diamond", "RomanticFilm", LocalDate.of(1785, 2, 5), 70);
+        Film filmWithOutdateRelease = new Film( "Diamond", "RomanticFilm", LocalDate.of(1785, 2, 5), 70);
         ValidationException exOutRelease = Assertions.assertThrows(
                 ValidationException.class,
                 generateExecutable(filmWithOutdateRelease)
         );
         Assertions.assertEquals("Дата релиза — не раньше 28 декабря 1895 года.", exOutRelease.getMessage());
 
-        Film filmWithNegativeDuration = new Film(1, "Diamond", "RomanticFilm", LocalDate.of(2020, 2, 5), -70);
+        Film filmWithNegativeDuration = new Film( "Diamond", "RomanticFilm", LocalDate.of(2020, 2, 5), -70);
         ValidationException exNegDur = Assertions.assertThrows(
                 ValidationException.class,
                 generateExecutable(filmWithNegativeDuration)
