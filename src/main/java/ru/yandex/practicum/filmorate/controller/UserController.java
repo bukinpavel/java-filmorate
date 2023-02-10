@@ -7,7 +7,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.service.UserService;
-
 import javax.validation.Valid;
 import java.util.List;
 
@@ -40,25 +39,25 @@ public class UserController {
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
-    @PutMapping("/users/{id}/friends/{friendId}")
+    @PutMapping("/{id}/friends/{friendId}")
     public ResponseEntity<String> addFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
         userService.addFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "added to user " + id, HttpStatus.OK);
     }
 
-    @DeleteMapping("/users/{id}/friends/{friendId}")
+    @DeleteMapping("/{id}/friends/{friendId}")
     public ResponseEntity<String> removeFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
         userService.removeFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "removed from userList " + id, HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}/friends")
+    @GetMapping("/{id}/friends")
     public ResponseEntity<List<User>> removeFriend(@PathVariable("id") Long id) {
         userService.getFriendList(id);
         return new ResponseEntity<>(userService.getFriendList(id), HttpStatus.OK);
     }
 
-    @GetMapping("/users/{id}/friends/common/{otherId}")
+    @GetMapping("/{id}/friends/common/{otherId}")
     public ResponseEntity<List<User>> getCommonFriendList(@PathVariable("id") Long id,
                                                           @PathVariable("otherId") Long otherId) {
         userService.getCommonFriendList(id, otherId);

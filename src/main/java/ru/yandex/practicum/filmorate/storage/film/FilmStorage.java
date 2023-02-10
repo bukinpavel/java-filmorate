@@ -5,7 +5,6 @@ import ru.yandex.practicum.filmorate.model.Film;
 
 import java.util.HashMap;
 import java.util.Map;
-@Component
 public interface FilmStorage {
     Map<Integer, Film> getFilms();
     void addFilm(Film film);

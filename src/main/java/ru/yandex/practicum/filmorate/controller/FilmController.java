@@ -39,19 +39,19 @@ public class FilmController {
         return new ResponseEntity<>(film, HttpStatus.OK);
     }
 
-    @PutMapping("/films/{id}/like/{userId}")
+    @PutMapping("/{id}/like/{userId}")
     public ResponseEntity<String> setFilmLikes(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
         filmService.setLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "liked by user " + userId, HttpStatus.OK);
     }
 
-    @DeleteMapping("/films/{id}/like/{userId}")
+    @DeleteMapping("/{id}/like/{userId}")
     public ResponseEntity<String> deleteLike(@PathVariable("id") Long id, @PathVariable("userId") Long userId){
         filmService.deleteLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "DISliked by user " + userId, HttpStatus.OK);
     }
 
-    @GetMapping("/films/popular")
+    @GetMapping("/popular")
     public ResponseEntity<List<Film>> countPopularFilms(@RequestParam(required = false) Integer count){
         List<Film> popularFilms = null;
         if(count!=null) {
