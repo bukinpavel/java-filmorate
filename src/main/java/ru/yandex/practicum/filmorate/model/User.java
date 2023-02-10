@@ -13,6 +13,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PastOrPresent;
 import java.time.LocalDate;
+import java.util.Set;
 
 @Data
 public class User {
@@ -26,6 +27,10 @@ public class User {
     private String name;
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private final LocalDate birthday;
+    private Set<Long> friendsId;
 
+    public Set<Long> getFriends() {
+        return friendsId;
+    }
 
 }

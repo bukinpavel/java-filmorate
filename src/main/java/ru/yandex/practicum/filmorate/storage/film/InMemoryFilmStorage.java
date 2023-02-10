@@ -9,7 +9,6 @@ import java.util.Map;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
-
     public void addFilm(Film film){
         films.put(film.getId(),film);
     }
@@ -20,4 +19,7 @@ public class InMemoryFilmStorage implements FilmStorage {
         films.replace(id, film);
     }
 
+    public Map<Integer, Film> getFilms() {
+        return films;
+    }
 }

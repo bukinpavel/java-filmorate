@@ -7,6 +7,13 @@ import org.junit.jupiter.api.function.Executable;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.FilmService;
+import ru.yandex.practicum.filmorate.service.UserService;
+import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
+import ru.yandex.practicum.filmorate.storage.film.InMemoryFilmStorage;
+import ru.yandex.practicum.filmorate.storage.user.InMemoryUserStorage;
+import ru.yandex.practicum.filmorate.storage.user.UserStorage;
+
 import java.time.LocalDate;
 
 @ExtendWith(SpringExtension.class)
@@ -42,11 +49,15 @@ class UserControllerTest {
     }
 
     private Executable generateExecutable(User user) {
-        UserController userController = new UserController();
+        UserStorage userStorage = new InMemoryUserStorage();
+        UserService userService = new UserService(userStorage);
+        UserController userController = new UserController(userService);
         return () -> userController.create(user);
     }
     private Executable putExecutable(User user) {
-        UserController userController = new UserController();
+        UserStorage userStorage = new InMemoryUserStorage();
+        UserService userService = new UserService(userStorage);
+        UserController userController = new UserController(userService);
         return () -> userController.put(user);
     }
 }
