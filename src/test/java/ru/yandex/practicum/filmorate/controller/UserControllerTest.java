@@ -64,7 +64,7 @@ class UserControllerTest {
         userController.create(user2);
         Assertions.assertEquals(2, userStorage.getUsers().size());
         System.out.println(userStorage.getUsers().values());
-        userController.addFriend(0,1);
+        userController.addFriend(1,2);
         System.out.println(userStorage.getUsers().values());
 
     }

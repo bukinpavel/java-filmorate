@@ -16,7 +16,7 @@ import java.util.Set;
 @Service
 public class UserService {
     private final UserStorage userStorage;
-    int id;
+    int id = 1;
 
     @Autowired
     public UserService(UserStorage userStorage) {

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 @Service
 public class FilmService {
     private final FilmStorage filmStorage;
-    private int id;
+    private int id = 1;
 
     @Autowired
     public FilmService(FilmStorage filmStorage) {
