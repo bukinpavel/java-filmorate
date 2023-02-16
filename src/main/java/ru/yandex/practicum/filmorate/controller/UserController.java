@@ -28,6 +28,12 @@ public class UserController {
         return userService.findAll();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@RequestBody Integer id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
+    }
+
+
     @PostMapping
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
         userService.create(user);

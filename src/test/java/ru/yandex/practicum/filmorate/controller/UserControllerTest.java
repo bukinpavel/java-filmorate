@@ -68,6 +68,7 @@ class UserControllerTest {
         userController.addFriend(1,2);
         //System.out.println(userStorage.getUsers().values());
         System.out.println(userService.getFriendList(1));
+        System.out.println(userService.findById(1));
 
     }
 

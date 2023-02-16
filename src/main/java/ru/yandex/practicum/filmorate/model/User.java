@@ -31,14 +31,6 @@ public class User {
     private final LocalDate birthday;
     private Set<Integer> friendsId = new HashSet<>();
 
-   /*
-    public User(String email, String login, LocalDate birthday) {
-        this.email = email;
-        this.login = login;
-        this.birthday = birthday;
-    }
-
-    */
     public Set<Integer> getFriendsId() {
         return friendsId;
     }

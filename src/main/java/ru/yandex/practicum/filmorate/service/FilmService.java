@@ -69,13 +69,13 @@ public class FilmService {
         return film;
     }
 
-    public void setLikeToFilm(Long id, Long userId) {
+    public void setLikeToFilm(Integer id, Integer userId) {
         if (!filmStorage.getFilms().get(id).getLikes().contains(userId)) {
             filmStorage.getFilms().get(id).getLikes().add(userId);
         }
     }
 
-    public void deleteLikeToFilm(Long id, Long userId) {
+    public void deleteLikeToFilm(Integer id, Integer userId) {
         if (filmStorage.getFilms().get(id).getLikes().contains(userId)) {
             filmStorage.getFilms().get(id).getLikes().remove(userId);
         }

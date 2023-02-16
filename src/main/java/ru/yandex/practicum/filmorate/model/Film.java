@@ -20,9 +20,9 @@ public class Film {
     private final LocalDate releaseDate;
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
-    private Set<Long> likes = new HashSet<>();;
+    private Set<Integer> likes = new HashSet<>();;
 
-    public Set<Long> getLikes() {
+    public Set<Integer> getLikes() {
         return likes;
     }
 

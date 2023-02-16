@@ -32,6 +32,10 @@ public class UserService {
         return values;
     }
 
+    public User findById(Integer id) {
+        return userStorage.getUsers().get(id);
+    }
+
     public User create(User user) {
 
         if (user.getEmail() == null || user.getEmail().isBlank()) {

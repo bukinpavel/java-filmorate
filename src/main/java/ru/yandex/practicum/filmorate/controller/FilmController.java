@@ -27,6 +27,14 @@ public class FilmController {
         return filmService.findAll();
     }
 
+    /*
+    @GetMapping("/{id}")
+    public List<Film> findAll(@) {
+        return filmService.findAll();
+    }
+
+     */
+
     @PostMapping
     public ResponseEntity<Film> create(@Valid @RequestBody Film film) {
         filmService.create(film);
@@ -40,13 +48,13 @@ public class FilmController {
     }
 
     @PutMapping("/{id}/like/{userId}")
-    public ResponseEntity<String> setFilmLikes(@PathVariable("id") Long id, @PathVariable("userId") Long userId) {
+    public ResponseEntity<String> setFilmLikes(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId) {
         filmService.setLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "liked by user " + userId, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public ResponseEntity<String> deleteLike(@PathVariable("id") Long id, @PathVariable("userId") Long userId){
+    public ResponseEntity<String> deleteLike(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId){
         filmService.deleteLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "DISliked by user " + userId, HttpStatus.OK);
     }
