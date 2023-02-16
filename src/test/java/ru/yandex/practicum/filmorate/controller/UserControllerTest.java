@@ -40,6 +40,35 @@ class UserControllerTest {
 
     }
 
+    @Test
+    void checkPutOneSizeOne() throws Exception {
+        User user = new User("pvb@mail.ru", "login",  LocalDate.of(1985, 2, 5));
+        UserStorage userStorage = new InMemoryUserStorage();
+        UserService userService = new UserService(userStorage);
+        UserController userController = new UserController(userService);
+        userController.create(user);
+        Assertions.assertEquals(1, userStorage.getUsers().size());
+        System.out.println(userStorage.getUsers().values());
+        System.out.println(userStorage.getUsers().keySet());
+
+    }
+
+    @Test
+    void checlAddFriend() throws Exception {
+        User user1 = new User("pvb@mail.ru", "login",  LocalDate.of(1985, 2, 5));
+        User user2 = new User("ABC@mail.ru", "login",  LocalDate.of(1985, 2, 5));
+        UserStorage userStorage = new InMemoryUserStorage();
+        UserService userService = new UserService(userStorage);
+        UserController userController = new UserController(userService);
+        userController.create(user1);
+        userController.create(user2);
+        Assertions.assertEquals(2, userStorage.getUsers().size());
+        System.out.println(userStorage.getUsers().values());
+        userController.addFriend(0,1);
+        System.out.println(userStorage.getUsers().values());
+
+    }
+
     private Executable generateExecutable(User user) {
         UserStorage userStorage = new InMemoryUserStorage();
         UserService userService = new UserService(userStorage);

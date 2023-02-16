@@ -33,7 +33,7 @@ public class UserService {
     }
 
     public User create(User user) {
-        /*
+
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
@@ -57,7 +57,7 @@ public class UserService {
             id++;
         }
 
-         */
+
         userStorage.getUsers().put(user.getId(), user);
         return user;
     }
@@ -86,8 +86,8 @@ public class UserService {
         return user;
     }
 
-    public void addFriend(Long id, Long friendId) {
-        userStorage.getUsers().get(id).getFriendsId().add(friendId);
+    public void addFriend(Integer id, Integer friendId) {
+        userStorage.getUsers().get(id).getFriendsId().add(Long.valueOf(friendId));
     }
 
     public void removeFriend(Long id, Long friendId) {

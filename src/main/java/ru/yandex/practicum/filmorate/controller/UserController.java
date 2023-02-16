@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<String> addFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
+    public ResponseEntity<String> addFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
         userService.addFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "added to user " + id, HttpStatus.OK);
     }
