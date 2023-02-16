@@ -28,8 +28,18 @@ public class User {
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private final LocalDate birthday;
     private Set<Long> friendsId;
-    public Set<Long> getFriends() {
+
+   /*
+    public User(String email, String login, LocalDate birthday) {
+        this.email = email;
+        this.login = login;
+        this.birthday = birthday;
+    }
+
+    */
+    public Set<Long> getFriendsId() {
         return friendsId;
     }
+
 
 }

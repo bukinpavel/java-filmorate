@@ -63,7 +63,6 @@ public class UserService {
     }
 
     public User put(User user) {
-        /*
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
@@ -83,31 +82,29 @@ public class UserService {
         if (!userStorage.getUsers().containsKey(user.getId())) {
             throw new ValidationException("Объекта с таким ID нет.");
         }
-
-         */
         userStorage.getUsers().put(user.getId(), user);
         return user;
     }
 
     public void addFriend(Long id, Long friendId) {
-        userStorage.getUsers().get(id).getFriends().add(friendId);
+        userStorage.getUsers().get(id).getFriendsId().add(friendId);
     }
 
     public void removeFriend(Long id, Long friendId) {
-        userStorage.getUsers().get(id).getFriends().remove(friendId);
+        userStorage.getUsers().get(id).getFriendsId().remove(friendId);
     }
 
     public List<User> getFriendList(Long id) {
         List<User> friendList = new ArrayList<>();
-        for (Long friendId : userStorage.getUsers().get(id).getFriends()) {
+        for (Long friendId : userStorage.getUsers().get(id).getFriendsId()) {
             friendList.add(userStorage.getUsers().get(friendId));
         }
         return friendList;
     }
 
     public List<User> getCommonFriendList(Long id, Long otherId) {
-        Set<Long> mutualFriends = new HashSet<>(userStorage.getUsers().get(id).getFriends());
-        mutualFriends.retainAll(userStorage.getUsers().get(otherId).getFriends());
+        Set<Long> mutualFriends = new HashSet<>(userStorage.getUsers().get(id).getFriendsId());
+        mutualFriends.retainAll(userStorage.getUsers().get(otherId).getFriendsId());
 
         List<User> mutualFriendsList = new ArrayList<>();
         for (Long friendId : mutualFriends) {
