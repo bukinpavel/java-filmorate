@@ -29,7 +29,7 @@ public class User {
     private String name;
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private final LocalDate birthday;
-    private Set<Long> friendsId = new HashSet<>();
+    private Set<Integer> friendsId = new HashSet<>();
 
    /*
     public User(String email, String login, LocalDate birthday) {
@@ -39,7 +39,7 @@ public class User {
     }
 
     */
-    public Set<Long> getFriendsId() {
+    public Set<Integer> getFriendsId() {
         return friendsId;
     }
 

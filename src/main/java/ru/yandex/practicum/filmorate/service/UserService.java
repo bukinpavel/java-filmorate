@@ -90,27 +90,27 @@ public class UserService {
     }
 
     public void addFriend(Integer id, Integer friendId) {
-        userStorage.getUsers().get(id).getFriendsId().add(Long.valueOf(friendId));
+        userStorage.getUsers().get(id).getFriendsId().add(friendId);
     }
 
     public void removeFriend(Long id, Long friendId) {
         userStorage.getUsers().get(id).getFriendsId().remove(friendId);
     }
 
-    public List<User> getFriendList(Long id) {
+    public List<User> getFriendList(Integer id) {
         List<User> friendList = new ArrayList<>();
-        for (Long friendId : userStorage.getUsers().get(id).getFriendsId()) {
+        for (Integer friendId : userStorage.getUsers().get(id).getFriendsId()) {
             friendList.add(userStorage.getUsers().get(friendId));
         }
         return friendList;
     }
 
-    public List<User> getCommonFriendList(Long id, Long otherId) {
-        Set<Long> mutualFriends = new HashSet<>(userStorage.getUsers().get(id).getFriendsId());
+    public List<User> getCommonFriendList(Integer id, Integer otherId) {
+        Set<Integer> mutualFriends = new HashSet<>(userStorage.getUsers().get(id).getFriendsId());
         mutualFriends.retainAll(userStorage.getUsers().get(otherId).getFriendsId());
 
         List<User> mutualFriendsList = new ArrayList<>();
-        for (Long friendId : mutualFriends) {
+        for (Integer friendId : mutualFriends) {
             mutualFriendsList.add(userStorage.getUsers().get(friendId));
         }
         return mutualFriendsList;

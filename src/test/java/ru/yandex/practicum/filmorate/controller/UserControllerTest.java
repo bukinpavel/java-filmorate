@@ -1,4 +1,5 @@
 package ru.yandex.practicum.filmorate.controller;
+import org.assertj.core.error.ShouldBeAfterYear;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -63,9 +64,10 @@ class UserControllerTest {
         userController.create(user1);
         userController.create(user2);
         Assertions.assertEquals(2, userStorage.getUsers().size());
-        System.out.println(userStorage.getUsers().values());
+        //System.out.println(userStorage.getUsers().values());
         userController.addFriend(1,2);
-        System.out.println(userStorage.getUsers().values());
+        //System.out.println(userStorage.getUsers().values());
+        System.out.println(userService.getFriendList(1));
 
     }
 

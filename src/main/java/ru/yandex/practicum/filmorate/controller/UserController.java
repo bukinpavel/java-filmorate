@@ -53,14 +53,14 @@ public class UserController {
     }
 
     @GetMapping("/{id}/friends")
-    public ResponseEntity<List<User>> removeFriend(@PathVariable("id") Long id) {
+    public ResponseEntity<List<User>> getFriendList(@PathVariable("id") Integer id) {
         userService.getFriendList(id);
         return new ResponseEntity<>(userService.getFriendList(id), HttpStatus.OK);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ResponseEntity<List<User>> getCommonFriendList(@PathVariable("id") Long id,
-                                                          @PathVariable("otherId") Long otherId) {
+    public ResponseEntity<List<User>> getCommonFriendList(@PathVariable("id") Integer id,
+                                                          @PathVariable("otherId") Integer otherId) {
         userService.getCommonFriendList(id, otherId);
         return new ResponseEntity<>(userService.getCommonFriendList(id, otherId), HttpStatus.OK);
     }
