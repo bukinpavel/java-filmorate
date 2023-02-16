@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +34,9 @@ public class UserService {
     }
 
     public User findById(Integer id) {
+        if(!userStorage.getUsers().containsKey(id)) {
+            throw new NotFoundException("Такого id нет");
+        }
         return userStorage.getUsers().get(id);
     }
 
@@ -60,8 +64,6 @@ public class UserService {
             user.setId(id);
             id++;
         }
-
-
         userStorage.getUsers().put(user.getId(), user);
         return user;
     }
@@ -85,7 +87,7 @@ public class UserService {
         }
 
         if (!userStorage.getUsers().containsKey(user.getId())) {
-            throw new ValidationException("Объекта с таким ID нет.");
+            throw new NotFoundException("Объекта с таким ID нет.");
         }
 
         userStorage.getUsers().put(user.getId(), user);
