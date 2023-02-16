@@ -28,7 +28,6 @@ public class User {
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private final LocalDate birthday;
     private Set<Long> friendsId;
-
     public Set<Long> getFriends() {
         return friendsId;
     }
