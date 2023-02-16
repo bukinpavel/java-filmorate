@@ -63,9 +63,6 @@ public class UserService {
     }
 
     public User put(User user) {
-        if (!userStorage.getUsers().containsKey(user.getId()))
-            throw new ValidationException("Объекта с таким ID нет.");
-
         if (user.getEmail() == null || user.getEmail().isBlank()) {
             throw new ValidationException("Адрес электронной почты не может быть пустым.");
         }
@@ -81,6 +78,10 @@ public class UserService {
 
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
+        }
+
+        if (!userStorage.getUsers().containsKey(user.getId())) {
+            throw new ValidationException("Объекта с таким ID нет.");
         }
 
         userStorage.getUsers().put(user.getId(), user);
