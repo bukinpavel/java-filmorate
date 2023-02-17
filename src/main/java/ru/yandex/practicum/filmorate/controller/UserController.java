@@ -1,85 +1,72 @@
 package ru.yandex.practicum.filmorate.controller;
 
-import exception.ValidationException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.User;
+import ru.yandex.practicum.filmorate.service.UserService;
 
 import javax.validation.Valid;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final Map<Integer, User> users = new HashMap<>();
-    private Integer id = 1;
+
+    private final UserService userService;
+
+    @Autowired
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping
     public List<User> findAll() {
-        List<User> values = new ArrayList<>(users.values());
-        log.debug("Текущее количество постов: {}", users.size());
-        return values;
+        return userService.findAll();
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable("id") Integer id) {
+        return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
     @PostMapping
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
-
-        if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new ValidationException("Адрес электронной почты не может быть пустым.");
-        }
-
-        if (!user.getEmail().contains("@")) {
-            throw new ValidationException("Адрес электронной почты должен содержать @.");
-        }
-        if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-            throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
-        }
-
-        if (!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))) {
-            throw new ValidationException("Дата рождения не может быть в будущем");
-        }
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-
-        if (user.getId() == null) {
-            user.setId(id);
-            id++;
-        }
-        users.put(user.getId(), user);
+        userService.create(user);
         return new ResponseEntity(user, HttpStatus.OK);
     }
 
     @PutMapping
     public ResponseEntity<User> put(@Valid @RequestBody User user) {
-        if (user.getEmail() == null || user.getEmail().isBlank()) {
-            throw new ValidationException("Адрес электронной почты не может быть пустым.");
-        }
-        if (!user.getEmail().contains("@")) {
-            throw new ValidationException("Адрес электронной почты должен содержать @.");
-        }
-        if (user.getLogin() == null || user.getLogin().isBlank() || user.getLogin().contains(" ")) {
-            throw new ValidationException("Login не должен быть пустым или содержать пробелы.");
-        }
-        if (!user.getBirthday().isBefore(LocalDate.now(ZoneId.systemDefault()))) {
-            throw new ValidationException("Дата рождения не может быть в будущем");
-        }
-
-        if (user.getName() == null || user.getName().isBlank()) {
-            user.setName(user.getLogin());
-        }
-        if (!users.containsKey(user.getId())) {
-            throw new ValidationException("Объекта с таким ID нет.");
-        }
-        users.put(user.getId(), user);
+        userService.put(user);
         return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
+    @PutMapping("/{id}/friends/{friendId}")
+    public ResponseEntity<String> addFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
+        userService.addFriend(id, friendId);
+        return new ResponseEntity<>("friend with " + friendId + "added to user " + id, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{id}/friends/{friendId}")
+    public ResponseEntity<String> removeFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
+        userService.removeFriend(id, friendId);
+        return new ResponseEntity<>("friend with " + friendId + "removed from userList " + id, HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/friends")
+    public ResponseEntity<List<User>> getFriendList(@PathVariable("id") Integer id) {
+        userService.getFriendList(id);
+        return new ResponseEntity<>(userService.getFriendList(id), HttpStatus.OK);
+    }
+
+    @GetMapping("/{id}/friends/common/{otherId}")
+    public ResponseEntity<List<User>> getCommonFriendList(@PathVariable("id") Integer id,
+                                                          @PathVariable("otherId") Integer otherId) {
+        userService.getCommonFriendList(id, otherId);
+        return new ResponseEntity<>(userService.getCommonFriendList(id, otherId), HttpStatus.OK);
     }
 }
