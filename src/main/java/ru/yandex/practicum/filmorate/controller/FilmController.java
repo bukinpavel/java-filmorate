@@ -60,12 +60,12 @@ public class FilmController {
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<List<Film>> countPopularFilms(@RequestParam(required = false) Integer count){
-        List<Film> popularFilms = null;
+    public ResponseEntity<List<Film>> showPopularFilms(@RequestParam(required = false) Integer count){
+        List<Film> popularFilms = filmService.showPopularFilms();
         if(count!=null) {
-             popularFilms = filmService.showPopularFilms().subList(0,count);
+             popularFilms = popularFilms.subList(0,count);
         }
-        else  popularFilms  = filmService.showPopularFilms().subList(0,10);
+        else  popularFilms  = popularFilms.subList(0,10);
 
         return new ResponseEntity<>(popularFilms, HttpStatus.OK);
     }

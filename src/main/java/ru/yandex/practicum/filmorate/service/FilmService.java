@@ -92,12 +92,6 @@ public class FilmService {
         List<Film> sortedList = filmStorage.getFilms().values().stream()
                 .sorted(Comparator.comparing(Film::getLikeSize, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList());
-        /*
-        if(sortedList.get(0).getLikes() == null || sortedList.get(0).getLikeSize() == 0){
-            sortedList = sortedList.subList(0,10);
-        }
-
-         */
         return sortedList;
     }
 

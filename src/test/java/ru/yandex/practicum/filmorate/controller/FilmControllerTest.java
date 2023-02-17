@@ -73,15 +73,9 @@ class FilmControllerTest {
                 70);
         Film film3 = new Film("HJK", "ComedyFilm", LocalDate.of(1985, 2, 5),
                 70);
-        User user1 = new User("pvb@mail.ru", "login",  LocalDate.of(1985, 2, 5));
-        User user2 = new User("ABC@mail.ru", "login",  LocalDate.of(1983, 2, 5));
-        User user3 = new User("DFG@mail.ru", "login",  LocalDate.of(1980, 2, 5));
         UserStorage userStorage = new InMemoryUserStorage();
         UserService userService = new UserService(userStorage);
         UserController userController = new UserController(userService);
-        userController.create(user1);
-        userController.create(user2);
-        userController.create(user3);
         FilmStorage filmStorage = new InMemoryFilmStorage();
         FilmService filmService = new FilmService(filmStorage);
         FilmController filmController = new FilmController(filmService);
@@ -95,7 +89,7 @@ class FilmControllerTest {
         filmController.setFilmLikes(2,4);
         Assertions.assertEquals(3, filmService.getFilmStorage().getFilms().get(1).getLikes().size());
         System.out.println(filmService.getFilmStorage().getFilms().values());
-        System.out.println(filmController.countPopularFilms(2));
+        System.out.println(filmService.showPopularFilms());
         //return filmController.findAll();
     }
 
