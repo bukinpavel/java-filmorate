@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,27 +64,33 @@ public class FilmService {
             id++;
         }
         if (!filmStorage.getFilms().containsKey(film.getId())) {
-            throw new ValidationException("Объекта с таким ID нет.");
+            throw new NotFoundException("Объекта с таким ID нет.");
         }
         filmStorage.getFilms().put(film.getId(), film);
         return film;
     }
 
     public void setLikeToFilm(Integer id, Integer userId) {
-        if (!filmStorage.getFilms().get(id).getLikes().contains(userId)) {
-            filmStorage.getFilms().get(id).getLikes().add(userId);
+        if (!filmStorage.getFilms().containsKey(id)) {
+            throw new NotFoundException("Объекта с таким ID нет.");
         }
+        filmStorage.getFilms().get(id).getLikes().add(userId);
     }
 
     public void deleteLikeToFilm(Integer id, Integer userId) {
-        if (filmStorage.getFilms().get(id).getLikes().contains(userId)) {
-            filmStorage.getFilms().get(id).getLikes().remove(userId);
+        if (!filmStorage.getFilms().containsKey(id)) {
+            throw new NotFoundException("Объекта с таким ID нет.");
         }
+        if (userId < 1) {
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
+        filmStorage.getFilms().get(id).getLikes().remove(userId);
+
     }
 
     public List<Film> showPopularFilms(){
         List<Film> sortedList = filmStorage.getFilms().values().stream()
-                .sorted(Comparator.comparing(Film:: getLikeSize, Comparator.nullsLast(Comparator.naturalOrder())))
+                .sorted(Comparator.comparing(Film::getLikeSize, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList());
         /*
         if(sortedList.get(0).getLikes() == null || sortedList.get(0).getLikeSize() == 0){
