@@ -33,6 +33,13 @@ public class FilmService {
         return values;
     }
 
+    public Film findById(Integer id) {
+        if (!filmStorage.getFilms().containsKey(id)) {
+            throw new NotFoundException("Такого id нет");
+        }
+        return filmStorage.getFilms().get(id);
+    }
+
     public Film create(Film film) {
         if (film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым.");
@@ -88,11 +95,10 @@ public class FilmService {
 
     }
 
-    public List<Film> showPopularFilms(){
+    public List<Film> showPopularFilms() {
         List<Film> sortedList = filmStorage.getFilms().values().stream()
                 .sorted(Comparator.comparing(Film::getLikeSize, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList());
         return sortedList;
     }
-
 }

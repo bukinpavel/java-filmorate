@@ -33,7 +33,6 @@ public class UserController {
         return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
-
     @PostMapping
     public ResponseEntity<User> create(@Valid @RequestBody User user) {
         userService.create(user);

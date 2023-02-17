@@ -27,13 +27,11 @@ public class FilmController {
         return filmService.findAll();
     }
 
-    /*
     @GetMapping("/{id}")
-    public List<Film> findAll(@) {
-        return filmService.findAll();
+    public ResponseEntity<Film> findById(@PathVariable("id") Integer id) {
+        return new ResponseEntity(filmService.findById(id), HttpStatus.OK);
     }
 
-     */
 
     @PostMapping
     public ResponseEntity<Film> create(@Valid @RequestBody Film film) {
@@ -54,26 +52,23 @@ public class FilmController {
     }
 
     @DeleteMapping("/{id}/like/{userId}")
-    public ResponseEntity<String> deleteLike(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId){
+    public ResponseEntity<String> deleteLike(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId) {
         filmService.deleteLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "DISliked by user " + userId, HttpStatus.OK);
     }
 
     @GetMapping("/popular")
-    public ResponseEntity<List<Film>> showPopularFilms(@RequestParam(required = false) Integer count){
+    public ResponseEntity<List<Film>> showPopularFilms(@RequestParam(required = false) Integer count) {
         List<Film> popularFilms = filmService.showPopularFilms();
-        if(count!=null) {
-             popularFilms = popularFilms.subList(0,count);
-        }
-        else if(filmService.getFilmStorage().getFilms().size() > 10){
-            popularFilms  = popularFilms.subList(0,10);
-        }
-        else if(filmService.getFilmStorage().getFilms().size() < 10){
-            popularFilms  = popularFilms.subList(0,filmService.getFilmStorage().getFilms().size());
+        if (count != null) {
+            popularFilms = popularFilms.subList(0, count);
+        } else if (filmService.getFilmStorage().getFilms().size() > 10) {
+            popularFilms = popularFilms.subList(0, 10);
+        } else if (filmService.getFilmStorage().getFilms().size() < 10) {
+            popularFilms = popularFilms.subList(0, filmService.getFilmStorage().getFilms().size());
         }
 
 
         return new ResponseEntity<>(popularFilms, HttpStatus.OK);
     }
-
 }

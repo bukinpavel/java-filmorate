@@ -34,7 +34,7 @@ public class UserService {
     }
 
     public User findById(Integer id) {
-        if(!userStorage.getUsers().containsKey(id)) {
+        if (!userStorage.getUsers().containsKey(id)) {
             throw new NotFoundException("Такого id нет");
         }
         return userStorage.getUsers().get(id);
@@ -124,5 +124,4 @@ public class UserService {
         }
         return mutualFriendsList;
     }
-
 }
