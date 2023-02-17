@@ -65,7 +65,13 @@ public class FilmController {
         if(count!=null) {
              popularFilms = popularFilms.subList(0,count);
         }
-        else  popularFilms  = popularFilms.subList(0,10);
+        else if(filmService.getFilmStorage().getFilms().size() > 10){
+            popularFilms  = popularFilms.subList(0,10);
+        }
+        else if(filmService.getFilmStorage().getFilms().size() < 10){
+            popularFilms  = popularFilms.subList(0,filmService.getFilmStorage().getFilms().size());
+        }
+
 
         return new ResponseEntity<>(popularFilms, HttpStatus.OK);
     }
