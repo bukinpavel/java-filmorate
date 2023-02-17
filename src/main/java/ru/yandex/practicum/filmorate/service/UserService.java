@@ -99,6 +99,7 @@ public class UserService {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
         userStorage.getUsers().get(id).getFriendsId().add(friendId);
+        userStorage.getUsers().get(friendId).getFriendsId().add(id);
     }
 
     public void removeFriend(Integer id, Integer friendId) {
