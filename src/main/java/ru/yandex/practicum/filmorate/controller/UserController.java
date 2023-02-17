@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<String> removeFriend(@PathVariable("id") Long id, @PathVariable("friendId") Long friendId) {
+    public ResponseEntity<String> removeFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
         userService.removeFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "removed from userList " + id, HttpStatus.OK);
     }

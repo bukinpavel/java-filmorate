@@ -89,17 +89,19 @@ public class UserService {
         if (!userStorage.getUsers().containsKey(user.getId())) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-
         userStorage.getUsers().put(user.getId(), user);
         return user;
 
     }
 
     public void addFriend(Integer id, Integer friendId) {
+        if(friendId < 1){
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
         userStorage.getUsers().get(id).getFriendsId().add(friendId);
     }
 
-    public void removeFriend(Long id, Long friendId) {
+    public void removeFriend(Integer id, Integer friendId) {
         userStorage.getUsers().get(id).getFriendsId().remove(friendId);
     }
 
