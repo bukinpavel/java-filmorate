@@ -9,13 +9,16 @@ import java.util.Map;
 @Component
 public class InMemoryFilmStorage implements FilmStorage {
     private final Map<Integer, Film> films = new HashMap<>();
-    public void addFilm(Film film){
-        films.put(film.getId(),film);
+
+    public void addFilm(Film film) {
+        films.put(film.getId(), film);
     }
-    public void deleteFilm(Film film){
+
+    public void deleteFilm(Film film) {
         films.remove(film.getId());
     }
-    public void modifyFilm(int id, Film film){
+
+    public void modifyFilm(int id, Film film) {
         films.replace(id, film);
     }
 

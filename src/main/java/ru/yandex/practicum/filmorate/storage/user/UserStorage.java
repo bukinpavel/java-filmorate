@@ -9,5 +9,4 @@ public interface UserStorage {
     Map<Integer, User> getUsers();
     void addUser(User user);
     void deleteUser(User user);
-    void modifyUser(User user);
 }

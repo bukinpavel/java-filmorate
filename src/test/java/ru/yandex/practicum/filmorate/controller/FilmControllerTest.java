@@ -62,7 +62,6 @@ class FilmControllerTest {
         FilmController filmController = new FilmController(filmService);
         filmStorage.addFilm(film1);
         Assertions.assertEquals(1, filmController.findAll().size());
-        //return filmController.findAll();
     }
 
     @Test
@@ -90,8 +89,5 @@ class FilmControllerTest {
         Assertions.assertEquals(3, filmService.getFilmStorage().getFilms().get(1).getLikes().size());
         System.out.println(filmService.getFilmStorage().getFilms().values());
         System.out.println(filmService.showPopularFilms());
-        //return filmController.findAll();
     }
-
-
 }

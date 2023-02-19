@@ -1,8 +1,7 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
-import org.springframework.stereotype.Service;
-
+import lombok.Getter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
@@ -20,12 +19,8 @@ public class Film {
     private final LocalDate releaseDate;
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
-    private Set<Integer> likes = new HashSet<>();
+    @Getter private Set<Integer> likes = new HashSet<>();
     private Integer rate;
-
-    public Set<Integer> getLikes() {
-        return likes;
-    }
 
     public int getLikeSize(){
         return this.getLikes().size();
