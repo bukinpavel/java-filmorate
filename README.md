@@ -1,3 +1,3 @@
 # java-filmorate
 Template repository for Filmorate project.
-https://github.com/bukinpavel/java-filmorate/blob/main/ERC.png
+![This is an image](https://github.com/bukinpavel/java-filmorate/blob/main/ERC.png)
