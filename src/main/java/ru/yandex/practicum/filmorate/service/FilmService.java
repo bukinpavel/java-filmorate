@@ -1,5 +1,6 @@
 package ru.yandex.practicum.filmorate.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,9 +9,7 @@ import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,7 +18,7 @@ public class FilmService {
     private int id = 1;
 
     @Autowired
-    public FilmService(FilmStorage filmStorage) {
+    public FilmService(@Qualifier("FilmDbStorage") FilmStorage filmStorage) {
         this.filmStorage = filmStorage;
     }
 
@@ -28,16 +27,14 @@ public class FilmService {
     }
 
     public List<Film> findAll() {
-        List<Film> values = new ArrayList<>(filmStorage
-                .getFilms().values());
-        return values;
+        return filmStorage.findAll();
     }
 
-    public Film findById(Integer id) {
-        if (!filmStorage.getFilms().containsKey(id)) {
+    public Optional<Film> findById(Integer id) {
+        if (filmStorage.findById(id).isEmpty()) {
             throw new NotFoundException("Такого id нет");
         }
-        return filmStorage.getFilms().get(id);
+        return filmStorage.findById(id);
     }
 
     public Film create(Film film) {
@@ -58,7 +55,7 @@ public class FilmService {
             film.setId(id);
             id++;
         }
-        filmStorage.getFilms().put(film.getId(), film);
+        filmStorage.addFilm(film);
         return film;
     }
 
@@ -73,7 +70,7 @@ public class FilmService {
         if (!filmStorage.getFilms().containsKey(film.getId())) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        filmStorage.getFilms().put(film.getId(), film);
+        filmStorage.modifyFilm(film);
         return film;
     }
 
@@ -81,7 +78,7 @@ public class FilmService {
         if (!filmStorage.getFilms().containsKey(id)) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        filmStorage.getFilms().get(id).getLikes().add(userId);
+        filmStorage.setLike(id,userId);
     }
 
     public void deleteLikeToFilm(Integer id, Integer userId) {
@@ -91,7 +88,7 @@ public class FilmService {
         if (userId < 1) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        filmStorage.getFilms().get(id).getLikes().remove(userId);
+        filmStorage.deleteLike(id, userId);
 
     }
 
@@ -100,5 +97,21 @@ public class FilmService {
                 .sorted(Comparator.comparing(Film::getLikeSize, Comparator.nullsLast(Comparator.reverseOrder())))
                 .collect(Collectors.toList());
         return sortedList;
+    }
+
+    public Optional<String> getGenreById(Integer id){
+        return filmStorage.getGenreById(id);
+    }
+
+    public Map<Integer, String> getGenres(){
+        return filmStorage.getGenres();
+    }
+
+    public Optional<String> getRatingById(Integer id){
+        return filmStorage.getRatingById(id);
+    }
+
+    public Map<Integer, String> getRatings(){
+        return filmStorage.getRatings();
     }
 }

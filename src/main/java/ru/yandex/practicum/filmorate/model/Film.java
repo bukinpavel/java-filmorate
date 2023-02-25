@@ -20,10 +20,10 @@ public class Film {
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
     @Getter private Set<Integer> likes = new HashSet<>();
-    private Integer rate;
+    private Set<String> rating = new HashSet<>();
+    private Set<String> genre = new HashSet<>();
 
     public int getLikeSize(){
         return this.getLikes().size();
     }
-
 }

@@ -59,8 +59,8 @@ public class UserController {
 
     @GetMapping("/{id}/friends")
     public ResponseEntity<List<User>> getFriendList(@PathVariable("id") Integer id) {
-        userService.getFriendList(id);
-        return new ResponseEntity<>(userService.getFriendList(id), HttpStatus.OK);
+        List<User> list = userService.getFriendList(id);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
