@@ -1,4 +1,4 @@
-/*
+
 INSERT INTO USERS (email, login, name, birthday) VALUES ('mmail@mail.ru', 'Kirry',
 'rihanna', '2022-03-28');
 
@@ -83,7 +83,7 @@ FROM FILM_RATING
 LEFT JOIN RATINGS ON FILM_RATING.RATINGS_ID = RATINGS.ID
 WHERE FILM_ID = 1;
 
- */
+
 
 
 
