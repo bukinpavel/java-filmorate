@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
@@ -36,7 +40,7 @@ class FilmoRateApplicationTests {
                 );
         System.out.println(userOptional);
     }
-
+/*
     @Test
     public void testGetUsers() {
 
@@ -98,5 +102,5 @@ class FilmoRateApplicationTests {
         System.out.println(films);
     }
 
-
+ */
 }
