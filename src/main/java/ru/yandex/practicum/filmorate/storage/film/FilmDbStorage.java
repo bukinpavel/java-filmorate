@@ -157,13 +157,20 @@ public class FilmDbStorage implements FilmStorage {
                 film.getReleaseDate(),
                 film.getDuration(),
                 film.getId());
-        String sqlQueryMpa = "update film_rating set " +
-                "ratings_id = ? " +
-                "where film_id = ?";
-        jdbcTemplate.update(sqlQueryMpa,
-                film.getMpa().getId(),
-                film.getId());
-
+        if (film.getMpa()==null) {
+            String delsqlQuery = "delete from film_rating where film_id = ?";
+            jdbcTemplate.update(delsqlQuery, film.getId());
+        }
+        else {
+            String delsqlQuery = "delete from film_rating where film_id = ?";
+            jdbcTemplate.update(delsqlQuery, film.getId());
+            String sqlQueryMpa = "update film_rating set " +
+                    "ratings_id = ? " +
+                    "where film_id = ?";
+            jdbcTemplate.update(sqlQueryMpa,
+                    film.getMpa().getId(),
+                    film.getId());
+        }
         if (film.getGenres().isEmpty()) {
             String delsqlQuery = "delete from film_genre where film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
