@@ -106,9 +106,9 @@ public class FilmService {
         return filmStorage.getGenreById(id).get();
     }
 
-    public List<Genre> getGenres(){
-        List<Genre> genres = new ArrayList<>(filmStorage.getGenres().values());
-        return genres;
+    public Map<Integer, Genre> getGenres(){
+        //List<Genre> genres = new ArrayList<>(filmStorage.getGenres().values());
+        return filmStorage.getGenres();
     }
 
     public Rating getRatingById(Integer id){
@@ -122,8 +122,8 @@ public class FilmService {
         return filmStorage.getRatingById(id).get();
     }
 
-    public  List<Rating> getRatings(){
-        List<Rating> ratings = new ArrayList<>(filmStorage.getRatings().values());
-        return ratings;
+    public  Map<Integer, Rating> getRatings(){
+        //List<Rating> ratings = new ArrayList<>(filmStorage.getRatings().values());
+        return filmStorage.getRatings();
     }
 }
