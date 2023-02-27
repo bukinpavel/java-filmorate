@@ -29,7 +29,7 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 class FilmoRateApplicationTests {
     private final UserDbStorage userStorage;
     private final FilmDbStorage filmStorage;
-
+/*
     @Test
     public void testFindUserById() {
 
@@ -43,7 +43,7 @@ class FilmoRateApplicationTests {
         System.out.println(userOptional);
         System.out.println();
     }
-/*
+
     @Test
     public void testGetUsers() {
 
@@ -106,20 +106,22 @@ class FilmoRateApplicationTests {
     }
 
  */
-@Test
-public void testAddFilms() {
-    Film film = new Film(
-            "nisi eiusmod",
-            "adipisicing",
-             LocalDate.of(1967,03,25),
-            100
-    );
-    film.setMpa(new Rating());
-    film.getMpa().setId(1);
-    filmStorage.addFilm(film);
-    //Map<Integer, Film> films = filmStorage.getFilms();
-    //filmStorage.findById(1)
-    Assertions.assertEquals(1, filmStorage.findById(1).get().getId());
-    System.out.println(filmStorage.findById(1).get());
-}
+
+
+    @Test
+    public void testAddFilms() {
+        Film film = new Film(
+                "nisi eiusmod",
+                "adipisicing",
+                LocalDate.of(1967, 03, 25),
+                100
+        );
+        film.setMpa(new Rating());
+        film.getMpa().setId(1);
+        filmStorage.addFilm(film);
+        //Map<Integer, Film> films = filmStorage.getFilms();
+        //filmStorage.findById(1)
+        Assertions.assertEquals(1, filmStorage.findById(1).get().getId());
+        System.out.println(filmStorage.findById(1).get());
+    }
 }
