@@ -8,10 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 
 @Data
@@ -28,7 +25,7 @@ public class Film {
     @Getter @Setter
     private Rating mpa;
     @Getter @Setter private Long rate;
-    @Getter private Set<Genre> genres = new HashSet<>();
+    @Getter private LinkedHashSet<Genre> genres = new LinkedHashSet<>();
 
 
     public int getLikeSize(){
