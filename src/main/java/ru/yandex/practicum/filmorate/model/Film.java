@@ -28,7 +28,7 @@ public class Film {
     @Getter @Setter
     private Rating mpa;
     @Getter @Setter private Long rate;
-    @Getter private List<Genre> genres = new ArrayList<>();
+    @Getter private Set<Genre> genres = new HashSet<>();
 
 
     public int getLikeSize(){

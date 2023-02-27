@@ -169,19 +169,22 @@ public class FilmDbStorage implements FilmStorage {
             String delsqlQuery = "delete from film_genre where film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
         } else {
+            /*
             String delsqlQuery = "delete from film_genre where film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
             Set<Integer> res = new HashSet<>();
+
+             */
             for (Genre e : film.getGenres()) {
-                if (!res.contains(e.getId())) {
+
                     String genreSqlQuery = "insert into film_genre(genres_id, film_id)" +
                             "values (?,?)";
                     jdbcTemplate.update(genreSqlQuery,
                             e.getId(),
                             film.getId()
                     );
-                    res.add(e.getId());
-                }
+                    film.getGenres().add(e);
+
             }
         }
     }
