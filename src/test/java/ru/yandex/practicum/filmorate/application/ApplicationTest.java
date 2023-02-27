@@ -11,10 +11,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 import ru.yandex.practicum.filmorate.storage.user.UserDbStorage;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -39,6 +41,7 @@ class FilmoRateApplicationTests {
                         assertThat(user).hasFieldOrPropertyWithValue("id", 1)
                 );
         System.out.println(userOptional);
+        System.out.println();
     }
 /*
     @Test
@@ -103,4 +106,20 @@ class FilmoRateApplicationTests {
     }
 
  */
+@Test
+public void testAddFilms() {
+    Film film = new Film(
+            "nisi eiusmod",
+            "adipisicing",
+             LocalDate.of(1967,03,25),
+            100
+    );
+    film.setMpa(new Rating());
+    film.getMpa().setId(1);
+    filmStorage.addFilm(film);
+    //Map<Integer, Film> films = filmStorage.getFilms();
+    //filmStorage.findById(1)
+    Assertions.assertEquals(1, filmStorage.findById(1).get().getId());
+    System.out.println(filmStorage.findById(1).get());
+}
 }

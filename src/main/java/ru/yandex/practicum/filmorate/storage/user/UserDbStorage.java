@@ -4,12 +4,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 
+import java.sql.PreparedStatement;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -70,6 +73,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public void addUser(User user) {
+        /*
         String sqlQuery = "insert into users(email, login, name, birthday) " +
                 "values (?, ?, ?,?)";
         jdbcTemplate.update(sqlQuery,
@@ -77,6 +81,20 @@ public class UserDbStorage implements UserStorage {
                 user.getLogin(),
                 user.getName(),
                 user.getBirthday());
+
+         */
+        String sqlQuery = "insert into users(email, login, name, birthday)"+
+                "values (?, ?, ?,?)";
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        jdbcTemplate.update(connection -> {
+            PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"id"});
+            stmt.setString(1, user.getEmail());
+            stmt.setString(2, user.getLogin());
+            stmt.setString(3, user.getName());
+            stmt.setObject(4, user.getBirthday());
+            return stmt;
+        }, keyHolder);
+        user.setId(keyHolder.getKey().intValue());
     }
 
     public void update(User user) {
@@ -119,7 +137,7 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public boolean deleteFriend(Integer userId, Integer friendId) {
-        String sqlQuery = "delete from user_friends where friend_id =? and id = ?";
+        String sqlQuery = "delete from user_friends where user_id =? and friend_id = ?";
         return jdbcTemplate.update(sqlQuery, userId, friendId) > 0;
     }
 

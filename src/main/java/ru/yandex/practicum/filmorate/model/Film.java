@@ -2,12 +2,17 @@ package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
 import lombok.Getter;
+import lombok.Setter;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 
 @Data
 public class Film {
@@ -20,10 +25,14 @@ public class Film {
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
     @Getter private Set<Integer> likes = new HashSet<>();
-    private Set<String> rating = new HashSet<>();
-    private Set<String> genre = new HashSet<>();
+    @Getter @Setter
+    private Rating mpa;
+    @Getter @Setter private Long rate;
+    @Getter private List<Genre> genres = new ArrayList<>();
+
 
     public int getLikeSize(){
-        return this.getLikes().size();
+        return getLikes().size();
     }
 }
+

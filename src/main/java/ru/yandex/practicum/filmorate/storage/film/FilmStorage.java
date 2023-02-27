@@ -2,6 +2,8 @@ package ru.yandex.practicum.filmorate.storage.film;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,9 +21,9 @@ public interface FilmStorage {
 
     void setLike(Integer filmId, Integer userId);
     boolean deleteLike(Integer filmId, Integer userId);
-    public Optional<String> getGenreById(Integer id);
-    public Map<Integer, String> getGenres();
-    public Optional<String> getRatingById(Integer id);
-    public Map<Integer, String> getRatings();
+    public Optional<Genre> getGenreById(Integer id);
+    public Map<Integer, Genre> getGenres();
+    public Optional<Rating> getRatingById(Integer id);
+    public Map<Integer, Rating> getRatings();
 
 }

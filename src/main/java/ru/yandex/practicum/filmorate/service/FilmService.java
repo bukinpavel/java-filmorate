@@ -6,6 +6,8 @@ import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.storage.film.FilmStorage;
 
 import java.time.LocalDate;
@@ -51,10 +53,6 @@ public class FilmService {
         if (film.getReleaseDate().isBefore(LocalDate.of(1895, 12, 28))) {
             throw new ValidationException("Дата релиза — не раньше 28 декабря 1895 года.");
         }
-        if (film.getId() == null) {
-            film.setId(id);
-            id++;
-        }
         filmStorage.addFilm(film);
         return film;
     }
@@ -63,13 +61,11 @@ public class FilmService {
         if (film.getName() == null || film.getName().isBlank()) {
             throw new ValidationException("Название фильма не может быть пустым.");
         }
-        if (film.getId() == null) {
-            film.setId(id);
-            id++;
-        }
+
         if (!filmStorage.getFilms().containsKey(film.getId())) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
+
         filmStorage.modifyFilm(film);
         return film;
     }
@@ -99,19 +95,34 @@ public class FilmService {
         return sortedList;
     }
 
-    public Optional<String> getGenreById(Integer id){
-        return filmStorage.getGenreById(id);
+    public Genre getGenreById(Integer id){
+        if (!filmStorage.getGenres().containsKey(id)) {
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
+        if (id < 1) {
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
+        return filmStorage.getGenreById(id).get();
     }
 
-    public Map<Integer, String> getGenres(){
-        return filmStorage.getGenres();
+    public List<Genre> getGenres(){
+        List<Genre> genres = new ArrayList<>(filmStorage.getGenres().values());
+        return genres;
     }
 
-    public Optional<String> getRatingById(Integer id){
-        return filmStorage.getRatingById(id);
+    public Rating getRatingById(Integer id){
+        if (!filmStorage.getRatings().containsKey(id)) {
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
+        if (id < 1) {
+            throw new NotFoundException("Объекта с таким ID нет.");
+        }
+
+        return filmStorage.getRatingById(id).get();
     }
 
-    public Map<Integer, String> getRatings(){
-        return filmStorage.getRatings();
+    public  List<Rating> getRatings(){
+        List<Rating> ratings = new ArrayList<>(filmStorage.getRatings().values());
+        return ratings;
     }
 }

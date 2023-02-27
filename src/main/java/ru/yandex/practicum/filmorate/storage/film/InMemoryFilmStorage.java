@@ -3,6 +3,8 @@ package ru.yandex.practicum.filmorate.storage.film;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.util.*;
 
@@ -50,22 +52,22 @@ public class InMemoryFilmStorage implements FilmStorage {
     }
 
     @Override
-    public Optional<String> getGenreById(Integer id) {
+    public Optional<Genre> getGenreById(Integer id) {
         return Optional.empty();
     }
 
     @Override
-    public Map<Integer, String> getGenres() {
+    public Map<Integer, Genre> getGenres() {
         return null;
     }
 
     @Override
-    public Optional<String> getRatingById(Integer id) {
+    public Optional<Rating> getRatingById(Integer id) {
         return Optional.empty();
     }
 
     @Override
-    public Map<Integer, String> getRatings() {
+    public Map<Integer, Rating> getRatings() {
         return null;
     }
 }
