@@ -164,9 +164,14 @@ public class FilmDbStorage implements FilmStorage {
         else {
             String delsqlQuery = "delete from film_rating where film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
+            String sqlQueryMpa = "insert into film_rating(genres_id, film_id)" +
+            "values (?,?)";
+            /*
             String sqlQueryMpa = "update film_rating set " +
                     "ratings_id = ? " +
                     "where film_id = ?";
+
+             */
             jdbcTemplate.update(sqlQueryMpa,
                     film.getMpa().getId(),
                     film.getId());
