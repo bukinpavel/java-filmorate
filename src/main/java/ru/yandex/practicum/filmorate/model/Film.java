@@ -25,7 +25,7 @@ public class Film {
     @Getter @Setter
     private Rating mpa;
     @Getter @Setter private Long rate;
-    @Getter private LinkedHashSet<Genre> genres = new LinkedHashSet<>();
+    @Getter private LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
 
 
     public int getLikeSize(){
