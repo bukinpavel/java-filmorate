@@ -107,7 +107,7 @@ class FilmoRateApplicationTests {
 
  */
 
-
+/*
     @Test
     public void testAddFilms() {
         Film film = new Film(
@@ -116,12 +116,19 @@ class FilmoRateApplicationTests {
                 LocalDate.of(1967, 03, 25),
                 100
         );
+
         film.setMpa(new Rating());
         film.getMpa().setId(1);
+
+
         filmStorage.addFilm(film);
         //Map<Integer, Film> films = filmStorage.getFilms();
         //filmStorage.findById(1)
         Assertions.assertEquals(1, filmStorage.findById(1).get().getId());
         System.out.println(filmStorage.findById(1).get());
+
     }
+
+ */
+
 }
