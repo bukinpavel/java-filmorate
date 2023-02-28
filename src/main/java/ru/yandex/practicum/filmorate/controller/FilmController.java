@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 import ru.yandex.practicum.filmorate.service.FilmService;
 
 import javax.validation.Valid;
@@ -71,22 +73,22 @@ public class FilmController {
     }
 
     @GetMapping("/genres")
-    public ResponseEntity<Map<Integer, String>> getGenres() {
+    public ResponseEntity<List<Genre>> getGenres() {
         return new ResponseEntity(filmService.getGenres(), HttpStatus.OK);
     }
 
     @GetMapping("/genres/{id}")
-    public ResponseEntity<Film> getGenres(@PathVariable("id") Integer id) {
+    public ResponseEntity<Genre> getGenre(@PathVariable("id") Integer id) {
         return new ResponseEntity(filmService.getGenreById(id), HttpStatus.OK);
     }
 
     @GetMapping("/mpa")
-    public ResponseEntity<Map<Integer, String>> getRatings() {
+    public ResponseEntity<List<Rating>> getRatings() {
         return new ResponseEntity(filmService.getRatings(), HttpStatus.OK);
     }
 
     @GetMapping("/mpa/{id}")
-    public ResponseEntity<Film> getRating(@PathVariable("id") Integer id) {
+    public ResponseEntity<Rating> getRating(@PathVariable("id") Integer id) {
         return new ResponseEntity(filmService.getRatingById(id), HttpStatus.OK);
     }
 
