@@ -107,7 +107,7 @@ class FilmoRateApplicationTests {
 
  */
 
-/*
+
     @Test
     public void testAddFilms() {
         Film film = new Film(
@@ -129,6 +129,5 @@ class FilmoRateApplicationTests {
 
     }
 
- */
 
 }
