@@ -6,6 +6,8 @@ import lombok.Setter;
 
 @Data
 public class Rating {
-    @Getter @Setter private Integer id;
-    @Getter @Setter private String name;
+   // @Getter @Setter
+    private Integer id;
+    //@Getter @Setter
+    private String name;
 }
