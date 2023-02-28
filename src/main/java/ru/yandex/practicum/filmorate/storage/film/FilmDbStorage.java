@@ -79,7 +79,6 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Map<Integer, Film> getFilms() {
         Map<Integer, Film> films = new HashMap<>();
-       // int id = -1;
         SqlRowSet filmRows = jdbcTemplate.queryForRowSet("select * from films");
         while (filmRows.next()) {
             int id = filmRows.getInt("id");
