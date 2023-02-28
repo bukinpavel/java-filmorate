@@ -21,11 +21,10 @@ public class Film {
     private final LocalDate releaseDate;
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
-    @Getter private Set<Integer> likes = new HashSet<>();
-    @Getter @Setter
+    private Set<Integer> likes = new HashSet<>();
     private Rating mpa;
-    @Getter @Setter private Long rate;
-    @Getter private LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
+    private Long rate;
+    private LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
 
 
     public int getLikeSize(){

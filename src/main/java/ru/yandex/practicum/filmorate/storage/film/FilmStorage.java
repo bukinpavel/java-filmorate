@@ -22,8 +22,8 @@ public interface FilmStorage {
     void setLike(Integer filmId, Integer userId);
     boolean deleteLike(Integer filmId, Integer userId);
     public Optional<Genre> getGenreById(Integer id);
-    public Map<Integer, Genre> getGenres();
+    public List<Genre> getGenres();
     public Optional<Rating> getRatingById(Integer id);
-    public Map<Integer, Rating> getRatings();
+    public List<Rating> getRatings();
 
 }
