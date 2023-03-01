@@ -66,8 +66,7 @@ create table if not exists film_genre
         FOREIGN KEY (genres_id)
             REFERENCES genres (id),
 
-
-    CONSTRAINT fk_film
+    CONSTRAINT fk_film_genre
         FOREIGN KEY (film_id)
             REFERENCES films (id)
 );
@@ -87,7 +86,7 @@ create table if not exists film_rating
         FOREIGN KEY (ratings_id)
             REFERENCES ratings (id),
 
-    CONSTRAINT fk_film
+    CONSTRAINT fk_film_rating
         FOREIGN KEY (film_id)
             REFERENCES films (id)
 );
