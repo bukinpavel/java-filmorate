@@ -73,22 +73,22 @@ public class FilmController {
     }
 
     @GetMapping("/genres")
-    public ResponseEntity<List<Genre>> getGenres() {
+    public ResponseEntity<List<Optional<Genre>>> getGenres() {
         return new ResponseEntity(filmService.getGenres(), HttpStatus.OK);
     }
 
     @GetMapping("/genres/{id}")
-    public ResponseEntity<Genre> getGenre(@PathVariable("id") Integer id) {
+    public ResponseEntity<Optional<Genre>> getGenre(@PathVariable("id") Integer id) {
         return new ResponseEntity(filmService.getGenreById(id), HttpStatus.OK);
     }
 
     @GetMapping("/mpa")
-    public ResponseEntity<List<Rating>> getRatings() {
+    public ResponseEntity<List<Optional<Rating>>> getRatings() {
         return new ResponseEntity(filmService.getRatings(), HttpStatus.OK);
     }
 
     @GetMapping("/mpa/{id}")
-    public ResponseEntity<Rating> getRating(@PathVariable("id") Integer id) {
+    public ResponseEntity<Optional<Rating>> getRating(@PathVariable("id") Integer id) {
         return new ResponseEntity(filmService.getRatingById(id), HttpStatus.OK);
     }
 

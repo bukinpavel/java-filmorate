@@ -96,14 +96,14 @@ public class FilmService {
         return sortedList;
     }
 
-    public Genre getGenreById(Integer id){
+    public Optional<Genre> getGenreById(Integer id){
         if (!filmStorage.getGenres().contains(filmStorage.getGenreById(id))) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
         if (id < 1) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        return filmStorage.getGenreById(id).get();
+        return filmStorage.getGenreById(id);
     }
 
     public List<Optional<Genre>> getGenres(){
