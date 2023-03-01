@@ -200,13 +200,12 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Map<Integer, Genre> getGenres() {
-        Map<Integer, Genre> genres = new HashMap<>();
-        int id = -1;
+    public List <Optional<Genre>> getGenres() {
+        List<Optional<Genre>> genres = new ArrayList<>();
         SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from genres");
         while (rRows.next()) {
-            id = rRows.getInt("id");
-            genres.put(id, getGenreById(id).get());
+            int id = rRows.getInt("id");
+            genres.add(getGenreById(id));
         }
         return genres;
     }
@@ -229,13 +228,12 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public Map<Integer, Rating> getRatings() {
-        Map<Integer, Rating> ratings = new HashMap<>();
-        int id = -1;
+    public List <Optional<Rating>> getRatings() {
+        List<Optional<Rating>> ratings = new ArrayList<>();
         SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from ratings");
         while (rRows.next()) {
-            id = rRows.getInt("id");
-            ratings.put(id, getRatingById(id).get());
+            int id = rRows.getInt("id");
+            ratings.add(getRatingById(id));
         }
         return ratings;
     }

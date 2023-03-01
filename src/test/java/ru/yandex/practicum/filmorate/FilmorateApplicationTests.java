@@ -12,6 +12,7 @@ import ru.yandex.practicum.filmorate.storage.film.FilmDbStorage;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @SpringBootTest
 @AutoConfigureTestDatabase
@@ -21,18 +22,14 @@ class FilmorateApplicationTests {
 	@Test
 	void contextLoads() {
 		/*
-		//filmStorage.getGenres();
-		Assertions.assertEquals(6, filmStorage.getGenres().values().size());
-		List<Genre> genreList = new ArrayList<Genre>(filmStorage.getGenres().values());
+		Assertions.assertEquals(6, filmStorage.getGenres().size());
+		List<Optional<Genre>> genreList = filmStorage.getGenres();
 		System.out.println(genreList);
 
-		Assertions.assertEquals(5, filmStorage.getRatings().values().size());
-		List<Rating> ratList = new ArrayList<Rating>(filmStorage.getRatings().values());
-		System.out.println(ratList);
+		Assertions.assertEquals(5, filmStorage.getRatings().size());
+		System.out.println(filmStorage.getRatings());
 
 		 */
-
-
 	}
 
 }

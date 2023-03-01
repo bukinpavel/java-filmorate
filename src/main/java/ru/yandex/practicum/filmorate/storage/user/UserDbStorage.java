@@ -73,16 +73,6 @@ public class UserDbStorage implements UserStorage {
 
     @Override
     public void addUser(User user) {
-        /*
-        String sqlQuery = "insert into users(email, login, name, birthday) " +
-                "values (?, ?, ?,?)";
-        jdbcTemplate.update(sqlQuery,
-                user.getEmail(),
-                user.getLogin(),
-                user.getName(),
-                user.getBirthday());
-
-         */
         String sqlQuery = "insert into users(email, login, name, birthday)"+
                 "values (?, ?, ?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
@@ -109,17 +99,6 @@ public class UserDbStorage implements UserStorage {
                 user.getId());
     }
 
-    /*
-     @Override
-     public void addFriend(User user, User otherUser) {
-         String sqlQuery = "insert into user_friends(user_id, friend_id) " +
-                 "values (?,?)";
-         jdbcTemplate.update(sqlQuery,
-                 user.getId(),
-                 otherUser.getId());
-     }
-
-     */
     @Override
     public void addFriend(Integer user, Integer otherUser) {
         String sqlQuery = "insert into user_friends(user_id, friend_id) " +

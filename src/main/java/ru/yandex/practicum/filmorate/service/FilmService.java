@@ -97,7 +97,7 @@ public class FilmService {
     }
 
     public Genre getGenreById(Integer id){
-        if (!filmStorage.getGenres().containsKey(id)) {
+        if (!filmStorage.getGenres().contains(filmStorage.getGenreById(id))) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
         if (id < 1) {
@@ -106,24 +106,22 @@ public class FilmService {
         return filmStorage.getGenreById(id).get();
     }
 
-    public List<Genre> getGenres(){
-        List<Genre> genres = new ArrayList<>(filmStorage.getGenres().values());
-        return genres;
+    public List<Optional<Genre>> getGenres(){
+        return filmStorage.getGenres();
     }
 
-    public Rating getRatingById(Integer id){
-        if (!filmStorage.getRatings().containsKey(id)) {
+    public Optional<Rating> getRatingById(Integer id){
+        if (!filmStorage.getRatings().contains(filmStorage.getRatingById(id))) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
         if (id < 1) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
 
-        return filmStorage.getRatingById(id).get();
+        return filmStorage.getRatingById(id);
     }
 
-    public  List<Rating> getRatings(){
-        List<Rating> ratings = new ArrayList<>(filmStorage.getRatings().values());
-        return ratings;
+    public  List <Optional<Rating>> getRatings(){
+        return filmStorage.getRatings();
     }
 }
