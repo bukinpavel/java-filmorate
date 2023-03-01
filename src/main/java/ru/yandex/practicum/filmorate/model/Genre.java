@@ -5,6 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 @Data
 public class Genre {
-    @Getter @Setter private Integer id;
-    @Getter @Setter private String name;
+    private Integer id;
+    private String name;
 }
