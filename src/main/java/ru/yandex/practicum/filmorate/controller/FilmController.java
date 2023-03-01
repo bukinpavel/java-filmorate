@@ -78,7 +78,7 @@ public class FilmController {
     }
 
     @GetMapping("/genres/{id}")
-    public ResponseEntity<Film> getGenres(@PathVariable("id") Integer id) {
+    public ResponseEntity<Genre> getGenre(@PathVariable("id") Integer id) {
         return new ResponseEntity(filmService.getGenreById(id), HttpStatus.OK);
     }
 
