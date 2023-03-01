@@ -57,13 +57,6 @@ public class UserService {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-        /*
-        if (user.getId() == null) {
-            user.setId(id);
-            id++;
-        }
-
-         */
         userStorage.addUser(user);
         return user;
     }
