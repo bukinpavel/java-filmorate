@@ -13,8 +13,6 @@ import ru.yandex.practicum.filmorate.model.Genre;
 import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
 @Component
@@ -28,9 +26,6 @@ public class FilmDbStorage implements FilmStorage {
     public FilmDbStorage(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }
-    private final static String SELECT_ALL_GENRES_SQL = "select * from genre";
-    private final static String SELECT_ALL_RATINGS_SQL = "select * from rating";
-
 
     @Override
     public Optional<Film> findById(Integer id) {
@@ -63,16 +58,16 @@ public class FilmDbStorage implements FilmStorage {
                 film.getLikes().add(userLikesRows.getInt("user_id"));
             }
             while (genresRows.next()) {
-                Genre genre = Genre.builder().id(genresRows.getInt("genres_id"))
-                        .name(genresRows.getString("name")).build();
+                Genre genre = new Genre();
+                genre.setId(genresRows.getInt("genres_id"));
+                genre.setName(genresRows.getString("name"));
                 film.getGenres().add(genre);
             }
 
             if (ratingRows.next()) {
-                film.setMpa(Rating.builder()
-                                .id(ratingRows.getInt("ratings_id"))
-                                .name(ratingRows.getString("name"))
-                        .build());
+                film.setMpa(new Rating());
+                film.getMpa().setId(ratingRows.getInt("ratings_id"));
+                film.getMpa().setName(ratingRows.getString("name"));
             }
             return Optional.of(film);
         } else {
@@ -84,9 +79,10 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Map<Integer, Film> getFilms() {
         Map<Integer, Film> films = new HashMap<>();
+        int id = -1;
         SqlRowSet filmRows = jdbcTemplate.queryForRowSet("select * from films");
         while (filmRows.next()) {
-            int id = filmRows.getInt("id");
+            id = filmRows.getInt("id");
             films.put(id, findById(id).get());
         }
         return films;
@@ -176,12 +172,12 @@ public class FilmDbStorage implements FilmStorage {
             String delsqlQuery = "delete from film_genre where film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
             for (Genre e : film.getGenres()) {
-                    String genreSqlQuery = "insert into film_genre(genres_id, film_id)" +
-                            "values (?,?)";
-                    jdbcTemplate.update(genreSqlQuery,
-                            e.getId(),
-                            film.getId()
-                    );
+                String genreSqlQuery = "insert into film_genre(genres_id, film_id)" +
+                        "values (?,?)";
+                jdbcTemplate.update(genreSqlQuery,
+                        e.getId(),
+                        film.getId()
+                );
                 film.getGenres().add(e);
             }
         }
@@ -192,8 +188,9 @@ public class FilmDbStorage implements FilmStorage {
         SqlRowSet genreRows = jdbcTemplate.queryForRowSet(
                 "select * from genres where id = ?", id);
         if (genreRows.next()) {
-            Genre genre = Genre.builder().id(genreRows.getInt("id"))
-                    .name(genreRows.getString("name")).build();
+            Genre genre = new Genre();
+            genre.setId(genreRows.getInt("id"));
+            genre.setName(genreRows.getString("name"));
             log.info("Найден genre: {} {}", genreRows.getString("id"), genreRows.getString("name"));
             return Optional.of(genre);
         } else {
@@ -203,16 +200,15 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public List<Genre> getGenres() {
-        return jdbcTemplate.query(SELECT_ALL_GENRES_SQL, (rs, rowNum) -> makeGenre(rs));
-
-    }
-
-    private Genre makeGenre(ResultSet rs) throws SQLException {
-        return Genre.builder()
-                .id(rs.getInt("genre_id"))
-                .name(rs.getString("name"))
-                .build();
+    public Map<Integer, Genre> getGenres() {
+        Map<Integer, Genre> genres = new HashMap<>();
+        int id = -1;
+        SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from genres");
+        while (rRows.next()) {
+            id = rRows.getInt("id");
+            genres.put(id, getGenreById(id).get());
+        }
+        return genres;
     }
 
     @Override
@@ -220,9 +216,10 @@ public class FilmDbStorage implements FilmStorage {
         SqlRowSet ratingRows = jdbcTemplate.queryForRowSet(
                 "select * from ratings where id = ?", id);
         if (ratingRows.next()) {
-            Rating rating1 = Rating.builder().id(ratingRows.getInt("id"))
-                    .name(ratingRows.getString("name"))
-                    .build();
+            Rating rating1 = new Rating(
+            );
+            rating1.setId(ratingRows.getInt("id"));
+            rating1.setName(ratingRows.getString("name"));
             log.info("Найден rating: {} {}", ratingRows.getString("id"), ratingRows.getString("name"));
             return Optional.of(rating1);
         } else {
@@ -232,14 +229,14 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public List<Rating> getRatings() {
-        return jdbcTemplate.query(SELECT_ALL_RATINGS_SQL, (rs, rowNum) -> makeRating(rs));
-    }
-
-    private Rating makeRating(ResultSet rs) throws SQLException {
-        return Rating.builder()
-                .id(rs.getInt("rating_id"))
-                .name(rs.getString("name"))
-                .build();
+    public Map<Integer, Rating> getRatings() {
+        Map<Integer, Rating> ratings = new HashMap<>();
+        int id = -1;
+        SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from ratings");
+        while (rRows.next()) {
+            id = rRows.getInt("id");
+            ratings.put(id, getRatingById(id).get());
+        }
+        return ratings;
     }
 }
