@@ -26,7 +26,6 @@ public class Film {
     private Long rate;
     private LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
 
-
     public int getLikeSize(){
         return getLikes().size();
     }

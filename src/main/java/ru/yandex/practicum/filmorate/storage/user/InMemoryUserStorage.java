@@ -11,6 +11,7 @@ import java.util.*;
 @Qualifier("InMemoryUserStorage")
 public class InMemoryUserStorage implements UserStorage {
     private final Map<Integer, User> users = new HashMap<>();
+
     @Override
     public Map<Integer, User> getUsers() {
         return users;
@@ -24,12 +25,13 @@ public class InMemoryUserStorage implements UserStorage {
         users.remove(id);
         return true;
     }
+
     @Override
     public Optional<User> findById(Integer id) {
         return Optional.of(getUsers().get(id));
     }
 
-    public void update(User user){
+    public void update(User user) {
         users.put(user.getId(), user);
     }
 

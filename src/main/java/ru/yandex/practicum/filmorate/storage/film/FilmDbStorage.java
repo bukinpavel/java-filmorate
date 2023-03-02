@@ -30,17 +30,17 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Optional<Film> findById(Integer id) {
         SqlRowSet filmRows = jdbcTemplate.queryForRowSet(
-                "select * from films where id = ?", id);
+                "SELECT * FROM films WHERE id = ?", id);
         SqlRowSet userLikesRows = jdbcTemplate.queryForRowSet(
-                "select * from users_like where film_id=?", id);
+                "SELECT * FROM users_like WHERE film_id=?", id);
         SqlRowSet genresRows = jdbcTemplate.queryForRowSet(
-                "SELECT * FROM FILM_GENRE " +
-                        "INNER JOIN GENRES G on FILM_GENRE.GENRES_ID = G.ID " +
-                        "WHERE FILM_ID = ?", id);
+                "SELECT * FROM film_genre " +
+                        "INNER JOIN genres g on film_genre.genres_id = g.id " +
+                        "WHERE film_id = ?", id);
         SqlRowSet ratingRows = jdbcTemplate.queryForRowSet(
-                "SELECT * FROM FILM_RATING " +
-                        "INNER JOIN RATINGS R on FILM_RATING.RATINGS_ID = R.ID " +
-                        "WHERE FILM_ID =?", id);
+                "SELECT * FROM film_rating " +
+                        "INNER JOIN ratings r on film_rating.ratings_id = r.id " +
+                        "WHERE film_id =?", id);
 
         if (filmRows.next()) {
             log.info("Найден user: {} {}", filmRows.getString("id"), filmRows.getString("name"));
@@ -79,10 +79,9 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Map<Integer, Film> getFilms() {
         Map<Integer, Film> films = new HashMap<>();
-        int id = -1;
-        SqlRowSet filmRows = jdbcTemplate.queryForRowSet("select * from films");
+        SqlRowSet filmRows = jdbcTemplate.queryForRowSet("SELECT * FROM films");
         while (filmRows.next()) {
-            id = filmRows.getInt("id");
+            int id = filmRows.getInt("id");
             films.put(id, findById(id).get());
         }
         return films;
@@ -95,8 +94,8 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public void setLike(Integer filmId, Integer userId) {
-        String sqlQuery = "insert into users_like(user_id, film_id) " +
-                "values (?,?)";
+        String sqlQuery = "INSERT INTO users_like(user_id, film_id) " +
+                "VALUES (?,?)";
         jdbcTemplate.update(sqlQuery,
                 userId,
                 filmId);
@@ -104,14 +103,14 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public boolean deleteLike(Integer filmId, Integer userId) {
-        String sqlQuery = "delete from users_like where user_id =? and film_id = ?";
+        String sqlQuery = "DELETE FROM users_like WHERE user_id =? AND film_id = ?";
         return jdbcTemplate.update(sqlQuery, userId, filmId) > 0;
     }
 
     @Override
     public void addFilm(Film film) {
-        String sqlQuery = "insert into films(name, description, release_date, duration) " +
-                "values (?, ?, ?,?)";
+        String sqlQuery = "INSERT INTO films(name, description, release_date, duration) " +
+                "VALUES (?, ?, ?,?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         jdbcTemplate.update(connection -> {
             PreparedStatement stmt = connection.prepareStatement(sqlQuery, new String[]{"id"});
@@ -123,16 +122,16 @@ public class FilmDbStorage implements FilmStorage {
         }, keyHolder);
         film.setId(keyHolder.getKey().intValue());
 
-        String ratingSqlQuery = "insert into film_rating(ratings_id, film_id)" +
-                "values (?,?)";
+        String ratingSqlQuery = "INSERT INTO film_rating(ratings_id, film_id)" +
+                "VALUES (?,?)";
         jdbcTemplate.update(ratingSqlQuery,
                 film.getMpa().getId(),
                 keyHolder.getKey().intValue()
         );
 
         for (Genre e : film.getGenres()) {
-            String genreSqlQuery = "insert into film_genre(genres_id, film_id)" +
-                    "values (?,?)";
+            String genreSqlQuery = "INSERT INTO film_genre(genres_id, film_id)" +
+                    "VALUES (?,?)";
             jdbcTemplate.update(genreSqlQuery,
                     e.getId(),
                     keyHolder.getKey().intValue()
@@ -142,15 +141,15 @@ public class FilmDbStorage implements FilmStorage {
 
     @Override
     public boolean deleteFilm(Integer id) {
-        String sqlQuery = "delete from films where id = ?";
+        String sqlQuery = "DELETE FROM films WHERE id = ?";
         return jdbcTemplate.update(sqlQuery, id) > 0;
     }
 
     @Override
     public void modifyFilm(Film film) {
-        String sqlQuery = "update films set " +
+        String sqlQuery = "UPDATE films SET " +
                 "name = ?, description = ?, release_date = ?, duration = ? " +
-                "where id = ?";
+                "WHERE id = ?";
         jdbcTemplate.update(sqlQuery,
                 film.getName(),
                 film.getDescription(),
@@ -158,22 +157,23 @@ public class FilmDbStorage implements FilmStorage {
                 film.getDuration(),
                 film.getId());
 
-        String sqlQueryMpa = "update film_rating set " +
+        String sqlQueryMpa = "UPDATE film_rating SET " +
                 "ratings_id = ? " +
-                "where film_id = ?";
+                "WHERE film_id = ?";
+
         jdbcTemplate.update(sqlQueryMpa,
                 film.getMpa().getId(),
                 film.getId());
 
         if (film.getGenres().isEmpty()) {
-            String delsqlQuery = "delete from film_genre where film_id = ?";
+            String delsqlQuery = "DELETE FROM film_genre WHERE film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
         } else {
-            String delsqlQuery = "delete from film_genre where film_id = ?";
+            String delsqlQuery = "DELETE FROM film_genre WHERE film_id = ?";
             jdbcTemplate.update(delsqlQuery, film.getId());
             for (Genre e : film.getGenres()) {
-                String genreSqlQuery = "insert into film_genre(genres_id, film_id)" +
-                        "values (?,?)";
+                String genreSqlQuery = "INSERT INTO film_genre(genres_id, film_id)" +
+                        "VALUES (?,?)";
                 jdbcTemplate.update(genreSqlQuery,
                         e.getId(),
                         film.getId()
@@ -186,7 +186,7 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Optional<Genre> getGenreById(Integer id) {
         SqlRowSet genreRows = jdbcTemplate.queryForRowSet(
-                "select * from genres where id = ?", id);
+                "SELECT * FROM genres WHERE id = ?", id);
         if (genreRows.next()) {
             Genre genre = new Genre();
             genre.setId(genreRows.getInt("id"));
@@ -200,9 +200,9 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public List <Optional<Genre>> getGenres() {
+    public List<Optional<Genre>> getGenres() {
         List<Optional<Genre>> genres = new ArrayList<>();
-        SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from genres");
+        SqlRowSet rRows = jdbcTemplate.queryForRowSet("SELECT * FROM genres");
         while (rRows.next()) {
             int id = rRows.getInt("id");
             genres.add(getGenreById(id));
@@ -213,7 +213,7 @@ public class FilmDbStorage implements FilmStorage {
     @Override
     public Optional<Rating> getRatingById(Integer id) {
         SqlRowSet ratingRows = jdbcTemplate.queryForRowSet(
-                "select * from ratings where id = ?", id);
+                "SELECT * FROM ratings WHERE id = ?", id);
         if (ratingRows.next()) {
             Rating rating1 = new Rating(
             );
@@ -228,9 +228,9 @@ public class FilmDbStorage implements FilmStorage {
     }
 
     @Override
-    public List <Optional<Rating>> getRatings() {
+    public List<Optional<Rating>> getRatings() {
         List<Optional<Rating>> ratings = new ArrayList<>();
-        SqlRowSet rRows = jdbcTemplate.queryForRowSet("select * from ratings");
+        SqlRowSet rRows = jdbcTemplate.queryForRowSet("SELECT * FROM ratings");
         while (rRows.next()) {
             int id = rRows.getInt("id");
             ratings.add(getRatingById(id));

@@ -15,8 +15,6 @@ import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.time.LocalDate;
 
-//@ExtendWith(SpringExtension.class)
-//@WebMvcTest(controllers = UserController.class)
 class UserControllerTest {
 
     @Test
@@ -42,30 +40,6 @@ class UserControllerTest {
         System.out.println(userStorage.getUsers().keySet());
 
     }
-/*
-    @Test
-    void checlAddFriend() throws Exception {
-        User user1 = new User("pvb@mail.ru", "login", LocalDate.of(1985, 2, 5));
-        User user2 = new User("ABC@mail.ru", "login", LocalDate.of(1983, 2, 5));
-        User user3 = new User("DFG@mail.ru", "login", LocalDate.of(1980, 2, 5));
-        UserStorage userStorage = new InMemoryUserStorage();
-        UserService userService = new UserService(userStorage);
-        UserController userController = new UserController(userService);
-        userController.create(user1);
-        userController.create(user2);
-        userController.create(user3);
-        Assertions.assertEquals(1, userStorage.getUsers().size());
-        //System.out.println(userStorage.getUsers().values());
-        userController.addFriend(1, 2);
-        userController.addFriend(1, 3);
-        //System.out.println(userStorage.getUsers().values());
-        System.out.println(userService.getFriendList(1).get(0).getId());
-        //System.out.println(userService.findById(3));
-        System.out.println(userService.findById(1));
-
-    }
-
- */
 
     private Executable generateExecutable(User user) {
         UserStorage userStorage = new InMemoryUserStorage();

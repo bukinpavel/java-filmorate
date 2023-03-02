@@ -21,15 +21,12 @@ class FilmorateApplicationTests {
 	private final FilmDbStorage filmStorage;
 	@Test
 	void contextLoads() {
-		/*
 		Assertions.assertEquals(6, filmStorage.getGenres().size());
 		List<Optional<Genre>> genreList = filmStorage.getGenres();
 		System.out.println(genreList);
 
 		Assertions.assertEquals(5, filmStorage.getRatings().size());
 		System.out.println(filmStorage.getRatings());
-
-		 */
 	}
 
 }

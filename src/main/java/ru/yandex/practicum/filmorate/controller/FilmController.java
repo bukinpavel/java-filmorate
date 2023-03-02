@@ -30,7 +30,7 @@ public class FilmController {
     }
 
     @GetMapping("/films/{id}")
-    public ResponseEntity<Film> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<Film> findById(@PathVariable Integer id) {
         return new ResponseEntity(filmService.findById(id), HttpStatus.OK);
     }
 
@@ -48,13 +48,13 @@ public class FilmController {
     }
 
     @PutMapping("/films/{id}/like/{userId}")
-    public ResponseEntity<String> setFilmLikes(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId) {
+    public ResponseEntity<String> setFilmLikes(@PathVariable Integer id, @PathVariable Integer userId) {
         filmService.setLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "liked by user " + userId, HttpStatus.OK);
     }
 
     @DeleteMapping("/films/{id}/like/{userId}")
-    public ResponseEntity<String> deleteLike(@PathVariable("id") Integer id, @PathVariable("userId") Integer userId) {
+    public ResponseEntity<String> deleteLike(@PathVariable Integer id, @PathVariable Integer userId) {
         filmService.deleteLikeToFilm(id, userId);
         return new ResponseEntity<>("film with " + id + "DISliked by user " + userId, HttpStatus.OK);
     }
@@ -78,7 +78,7 @@ public class FilmController {
     }
 
     @GetMapping("/genres/{id}")
-    public ResponseEntity<Optional<Genre>> getGenre(@PathVariable("id") Integer id) {
+    public ResponseEntity<Optional<Genre>> getGenre(@PathVariable Integer id) {
         return new ResponseEntity(filmService.getGenreById(id), HttpStatus.OK);
     }
 
@@ -88,7 +88,7 @@ public class FilmController {
     }
 
     @GetMapping("/mpa/{id}")
-    public ResponseEntity<Optional<Rating>> getRating(@PathVariable("id") Integer id) {
+    public ResponseEntity<Optional<Rating>> getRating(@PathVariable Integer id) {
         return new ResponseEntity(filmService.getRatingById(id), HttpStatus.OK);
     }
 

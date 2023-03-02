@@ -18,13 +18,12 @@ public interface FilmStorage {
 
     Optional<Film> findById(Integer id);
     public List<Film> findAll();
-
     void setLike(Integer filmId, Integer userId);
     boolean deleteLike(Integer filmId, Integer userId);
-    public Optional<Genre> getGenreById(Integer id);
-    public List <Optional<Genre>> getGenres();
-    public Optional<Rating> getRatingById(Integer id);
-    public List <Optional<Rating>> getRatings();
+    Optional<Genre> getGenreById(Integer id);
+    List <Optional<Genre>> getGenres();
+    Optional<Rating> getRatingById(Integer id);
+    List <Optional<Rating>> getRatings();
 
 }
 
