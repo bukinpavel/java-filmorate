@@ -15,7 +15,6 @@ public interface FilmStorage {
     void addFilm(Film film);
     boolean deleteFilm(Integer id);
     void modifyFilm(Film film);
-
     Optional<Film> findById(Integer id);
     public List<Film> findAll();
     void setLike(Integer filmId, Integer userId);
