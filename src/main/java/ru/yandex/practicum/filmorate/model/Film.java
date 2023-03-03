@@ -1,14 +1,15 @@
 package ru.yandex.practicum.filmorate.model;
 
 import lombok.Data;
-import org.springframework.stereotype.Service;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+
 
 @Data
 public class Film {
@@ -21,14 +22,12 @@ public class Film {
     @Positive(message = "продолжительность фильма должна быть положительной.")
     private final long duration;
     private Set<Integer> likes = new HashSet<>();
-    private Integer rate;
-
-    public Set<Integer> getLikes() {
-        return likes;
-    }
+    private Rating mpa;
+    private Long rate;
+    private LinkedHashSet<Genre> genres = new LinkedHashSet<Genre>();
 
     public int getLikeSize(){
-        return this.getLikes().size();
+        return getLikes().size();
     }
-
 }
+

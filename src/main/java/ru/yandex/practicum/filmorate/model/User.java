@@ -30,10 +30,8 @@ public class User {
     @PastOrPresent(message = "дата рождения не может быть в будущем")
     private final LocalDate birthday;
     private Set<Integer> friendsId = new HashSet<>();
-
+    private Set<Integer> friendRequest = new HashSet<>();
     public Set<Integer> getFriendsId() {
         return friendsId;
     }
-
-
 }

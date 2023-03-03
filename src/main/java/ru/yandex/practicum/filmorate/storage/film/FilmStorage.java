@@ -2,12 +2,27 @@ package ru.yandex.practicum.filmorate.storage.film;
 
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.filmorate.model.Film;
+import ru.yandex.practicum.filmorate.model.Genre;
+import ru.yandex.practicum.filmorate.model.Rating;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+
 public interface FilmStorage {
     Map<Integer, Film> getFilms();
     void addFilm(Film film);
-    void deleteFilm(Film film);
-    void modifyFilm(int id,Film film);
+    boolean deleteFilm(Integer id);
+    void modifyFilm(Film film);
+    Optional<Film> findById(Integer id);
+    public List<Film> findAll();
+    void setLike(Integer filmId, Integer userId);
+    boolean deleteLike(Integer filmId, Integer userId);
+    Optional<Genre> getGenreById(Integer id);
+    List <Optional<Genre>> getGenres();
+    Optional<Rating> getRatingById(Integer id);
+    List <Optional<Rating>> getRatings();
+
 }
+

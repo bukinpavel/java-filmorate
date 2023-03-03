@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> findById(@PathVariable("id") Integer id) {
+    public ResponseEntity<User> findById(@PathVariable Integer id) {
         return new ResponseEntity(userService.findById(id), HttpStatus.OK);
     }
 
@@ -46,26 +46,26 @@ public class UserController {
     }
 
     @PutMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<String> addFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
+    public ResponseEntity<String> addFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
         userService.addFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "added to user " + id, HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}/friends/{friendId}")
-    public ResponseEntity<String> removeFriend(@PathVariable("id") Integer id, @PathVariable("friendId") Integer friendId) {
+    public ResponseEntity<String> removeFriend(@PathVariable Integer id, @PathVariable Integer friendId) {
         userService.removeFriend(id, friendId);
         return new ResponseEntity<>("friend with " + friendId + "removed from userList " + id, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/friends")
-    public ResponseEntity<List<User>> getFriendList(@PathVariable("id") Integer id) {
-        userService.getFriendList(id);
-        return new ResponseEntity<>(userService.getFriendList(id), HttpStatus.OK);
+    public ResponseEntity<List<User>> getFriendList(@PathVariable Integer id) {
+        List<User> list = userService.getFriendList(id);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 
     @GetMapping("/{id}/friends/common/{otherId}")
-    public ResponseEntity<List<User>> getCommonFriendList(@PathVariable("id") Integer id,
-                                                          @PathVariable("otherId") Integer otherId) {
+    public ResponseEntity<List<User>> getCommonFriendList(@PathVariable Integer id,
+                                                          @PathVariable Integer otherId) {
         userService.getCommonFriendList(id, otherId);
         return new ResponseEntity<>(userService.getCommonFriendList(id, otherId), HttpStatus.OK);
     }

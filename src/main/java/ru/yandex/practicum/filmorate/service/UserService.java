@@ -1,18 +1,17 @@
 package ru.yandex.practicum.filmorate.service;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import ru.yandex.practicum.filmorate.exception.NotFoundException;
 import ru.yandex.practicum.filmorate.exception.ValidationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.yandex.practicum.filmorate.model.Film;
 import ru.yandex.practicum.filmorate.model.User;
 import ru.yandex.practicum.filmorate.storage.user.UserStorage;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class UserService {
@@ -20,7 +19,7 @@ public class UserService {
     int id = 1;
 
     @Autowired
-    public UserService(UserStorage userStorage) {
+    public UserService(@Qualifier("UserDbStorage") UserStorage userStorage) {
         this.userStorage = userStorage;
     }
 
@@ -33,13 +32,12 @@ public class UserService {
         return values;
     }
 
-    public User findById(Integer id) {
-        if (!userStorage.getUsers().containsKey(id)) {
+    public Optional<User> findById(Integer id) {
+        if (userStorage.findById(id).isEmpty()) {
             throw new NotFoundException("Такого id нет");
         }
-        return userStorage.getUsers().get(id);
+        return userStorage.findById(id);
     }
-
     public User create(User user) {
 
         if (user.getEmail() == null || user.getEmail().isBlank()) {
@@ -59,12 +57,7 @@ public class UserService {
         if (user.getName() == null || user.getName().isBlank()) {
             user.setName(user.getLogin());
         }
-
-        if (user.getId() == null) {
-            user.setId(id);
-            id++;
-        }
-        userStorage.getUsers().put(user.getId(), user);
+        userStorage.addUser(user);
         return user;
     }
 
@@ -89,7 +82,7 @@ public class UserService {
         if (!userStorage.getUsers().containsKey(user.getId())) {
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        userStorage.getUsers().put(user.getId(), user);
+        userStorage.update(user);
         return user;
 
     }
@@ -98,30 +91,18 @@ public class UserService {
         if(friendId < 1){
             throw new NotFoundException("Объекта с таким ID нет.");
         }
-        userStorage.getUsers().get(id).getFriendsId().add(friendId);
-        userStorage.getUsers().get(friendId).getFriendsId().add(id);
+        userStorage.addFriend(id,friendId);
     }
 
     public void removeFriend(Integer id, Integer friendId) {
-        userStorage.getUsers().get(id).getFriendsId().remove(friendId);
+        userStorage.deleteFriend(id, friendId);
     }
 
     public List<User> getFriendList(Integer id) {
-        List<User> friendList = new ArrayList<>();
-        for (Integer friendId : userStorage.getUsers().get(id).getFriendsId()) {
-            friendList.add(userStorage.getUsers().get(friendId));
-        }
-        return friendList;
+        return userStorage.getFriendList(id);
     }
 
     public List<User> getCommonFriendList(Integer id, Integer otherId) {
-        Set<Integer> mutualFriends = new HashSet<>(userStorage.getUsers().get(id).getFriendsId());
-        mutualFriends.retainAll(userStorage.getUsers().get(otherId).getFriendsId());
-
-        List<User> mutualFriendsList = new ArrayList<>();
-        for (Integer friendId : mutualFriends) {
-            mutualFriendsList.add(userStorage.getUsers().get(friendId));
-        }
-        return mutualFriendsList;
+        return userStorage.getCommonFriendList(id,otherId);
     }
 }
